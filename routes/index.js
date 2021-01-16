@@ -1,4 +1,4 @@
-module.exports = (function(client){
+module.exports = (function(clickhouse){
     'use strict'
     const express = require('express');
     const bodyParser = require('body-parser');
@@ -11,8 +11,11 @@ module.exports = (function(client){
     }));
 
     router.get('/', (req, res) => {
-        console.log('Hello world');
-        res.render('./pages/');
+        const query = 'SELECT * FROM stream_data;';
+        clickhouse.query(query).exec(function (err, rows) {
+            console.log(rows);
+        });
+        res.render('./pages/index.ejs');
     });
 
     // Error page

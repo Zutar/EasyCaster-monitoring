@@ -1,6 +1,5 @@
 const express = require('express');
 const config = require('./config');
-const index = require('./routes/index')();
 const { ClickHouse } = require('clickhouse');
 
 const clickhouse = new ClickHouse({
@@ -21,6 +20,8 @@ const clickhouse = new ClickHouse({
         database                                : 'my_database_name',
     }
 });
+
+const index = require('./routes/index')(clickhouse);
 
 const app = express();
 
