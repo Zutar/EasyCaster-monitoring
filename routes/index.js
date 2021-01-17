@@ -55,6 +55,9 @@ module.exports = (function(clickhouse){
         const query = `SELECT * FROM stream_data;`;
         clickhouse.query(query).exec(function (err, rows) {
             console.log(rows);
+            console.log(rows.body);
+            console.log(rows.result);
+            console.log(rows[0]);
         });
     });
 
