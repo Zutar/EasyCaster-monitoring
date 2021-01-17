@@ -8,6 +8,7 @@
     <script>
     window.onload = function () {
         let dataPoints = [];
+        let dataPoints2 = [];
     
         let stockChart = new CanvasJS.StockChart("chartContainer",{
             title: {
@@ -17,6 +18,12 @@
                 data: [{        
                     type: "line", //Change it to "spline", "area", "column"
                     dataPoints : dataPoints
+                }],
+            },
+            {
+                data: [{     
+                    type: "line",   
+                    dataPoints : dataPoints2
                 }]
             }],
             navigator: {
@@ -33,8 +40,8 @@
             console.log(data);
             for(let i = 0; i < data.length; i++){
                 dataPoints.push({x: new Date(data[i].timestamp), y: data[i].fps});
+                dataPoints2.push({x: new Date(data[i].timestamp), y: data[i].bitrate});
             }
-            console.log(dataPoints);
             stockChart.render();
         });
     }
