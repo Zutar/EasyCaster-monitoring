@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
+    <script>
+    window.onload = function () {
+        let dataPoints = [];
+    
+        let stockChart = new CanvasJS.StockChart("chartContainer",{
+            title: {
+                text: "StockChart Title"
+            },
+            charts: [{      
+                data: [{        
+                    type: "line", //Change it to "spline", "area", "column"
+                    dataPoints : dataPoints
+                }]
+            }],
+            navigator: {
+                slider: {
+                    minimum: new Date(2018, 04, 01),
+                    maximum: new Date(2018, 06, 01)
+                }
+            }
+        }); 
+
+        fetch('/getChart')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            for(let i = 0; i < data.length; i++){
+                dataPoints.push({x: data[i].timestamp, y: data[i].fps});
+            }
+            stockChart.render();
+        });
+    }
+    </script>
+</head>
+<body>
+    <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+</body>
+</html>
