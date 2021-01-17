@@ -5,7 +5,7 @@ module.exports = (function(clickhouse){
     const { spawn } = require('child_process');
     const router = express.Router();
 
-    const cmd = 'ffmpeg -i rtmp://cdn10.live-tv.od.ua/7tvod/7tvod -c copy udp://127.0.0.1:11111?pkt_size=1316';
+    const cmd = 'ffmpeg -i rtmp://cdn10.live-tv.od.ua/7tvod/7tvod -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316';
     const cmdArray = cmd.split(' ');
     const firstCmdItem = cmdArray.shift();
     let child = null;
@@ -36,6 +36,7 @@ module.exports = (function(clickhouse){
                 const parametersArray = data.toString().split('=');
                 const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
                 const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
+                console.log(data);
                 //console.log(`fps: ${fps}\nbitrate: ${bitrate}\n\n`);
                 
                 const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
