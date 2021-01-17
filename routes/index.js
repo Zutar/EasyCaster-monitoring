@@ -25,24 +25,25 @@ module.exports = (function(clickhouse){
         }
         
         let child = spawn(firstCmdItem, cmdArray);
-        res.render('./pages/index.ejs');
-    });
 
-    child.stderr.on('data', (data) => {
-        if(data.indexOf('fps') !== -1 && 
-           data.indexOf('bitrate') !== -1 && 
-           data.indexOf('frame') !== -1){
-            const parametersArray = data.toString().split('=');
-            const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
-            const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
-            console.log(`fps: ${fps}\n
-            bitrate: ${bitrate}\n\n`);
-            
-            const query = 'SELECT * FROM stream_data;';
-            clickhouse.query(query).exec(function (err, rows) {
-                console.log(rows);
-            });
-        }
+        child.stderr.on('data', (data) => {
+            if(data.indexOf('fps') !== -1 && 
+               data.indexOf('bitrate') !== -1 && 
+               data.indexOf('frame') !== -1){
+                const parametersArray = data.toString().split('=');
+                const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
+                const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
+                console.log(`fps: ${fps}\n
+                bitrate: ${bitrate}\n\n`);
+                
+                const query = 'SELECT * FROM stream_data;';
+                clickhouse.query(query).exec(function (err, rows) {
+                    console.log(rows);
+                });
+            }
+        });
+
+        res.render('./pages/index.ejs');
     });
 
     // Error page
