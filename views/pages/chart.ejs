@@ -32,7 +32,7 @@
         .then(data => {
             console.log(data);
             for(let i = 0; i < data.length; i++){
-                dataPoints.push({x: data[i].timestamp, y: data[i].fps});
+                dataPoints.push({x: new Date(data[i].timestamp), y: data[i].fps});
             }
             console.log(dataPoints);
             stockChart.render();
