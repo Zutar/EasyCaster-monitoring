@@ -21,8 +21,8 @@
             }],
             navigator: {
                 slider: {
-                    minimum: new Date(2018, 04, 01),
-                    maximum: new Date(2018, 06, 01)
+                    minimum: new Date(2020, 04, 01),
+                    maximum: new Date(2021, 01, 17)
                 }
             }
         }); 
@@ -34,6 +34,7 @@
             for(let i = 0; i < data.length; i++){
                 dataPoints.push({x: data[i].timestamp, y: data[i].fps});
             }
+            console.log(dataPoints);
             stockChart.render();
         });
     }
