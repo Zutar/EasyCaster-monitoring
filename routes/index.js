@@ -8,6 +8,7 @@ module.exports = (function(clickhouse){
     const cmd = 'ffmpeg -i rtmp://cdn10.live-tv.od.ua/7tvod/7tvod -aspect 4:3 -threads 2 -flags cgop+ilme -preset fast -profile:v main -c:v libx264 -pix_fmt yuv420p -b:v 2500k -maxrate 2500k -bufsize 625k -g 50 -keyint_min 25 -bf 2 -c:a mp2 -b:a 192k -ar 48000 -ac 2 -f mpegts -flush_packets 0 udp://127.0.0.1:1111?pkt_size=1316&fifo_size=50000';
     const cmdArray = cmd.split(' ');
     const firstCmdItem = cmdArray.shift();
+    let child = null;
     
 
     router.use(bodyParser.json({limit:'5mb'}));
@@ -26,7 +27,7 @@ module.exports = (function(clickhouse){
             }
         }
         
-        let child = spawn(firstCmdItem, cmdArray);
+        child = spawn(firstCmdItem, cmdArray);
 
         child.stderr.on('data', (data) => {
             if(data.indexOf('fps') !== -1 && 
