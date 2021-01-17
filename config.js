@@ -1,5 +1,5 @@
 let config = {};
 
-config.port = 80;
+config.port = 8080;
 
 module.exports = config;
