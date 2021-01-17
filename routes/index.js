@@ -17,11 +17,13 @@ module.exports = (function(clickhouse){
     }));
 
     router.get('/', (req, res) => {
-        try{
-            child.stdin.pause();
-            child.kill();
-        }catch(e){
-            console.log(e);
+        if(child){
+            try{
+                child.stdin.pause();
+                child.kill();
+            }catch(e){
+                console.log(e);
+            }
         }
         
         let child = spawn(firstCmdItem, cmdArray);
@@ -33,17 +35,27 @@ module.exports = (function(clickhouse){
                 const parametersArray = data.toString().split('=');
                 const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
                 const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
-                console.log(`fps: ${fps}\n
-                bitrate: ${bitrate}\n\n`);
+                //console.log(`fps: ${fps}\nbitrate: ${bitrate}\n\n`);
                 
                 const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
                 clickhouse.query(query).exec(function (err, rows) {
-                    console.log(rows);
+                    //console.log(rows);
                 });
             }
         });
 
         res.render('./pages/index.ejs');
+    });
+
+    router.get('/chart', (req, res) => {
+        res.render('./pages/chart.ejs');
+    });
+
+    router.get('/getChart', (req, res) => {
+        const query = `SELECT * FROM stream_data;`;
+        clickhouse.query(query).exec(function (err, rows) {
+            console.log(rows);
+        });
     });
 
     // Error page
