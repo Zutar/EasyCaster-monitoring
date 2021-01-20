@@ -34,6 +34,7 @@
         .then(response => response.json())
         .then(data => {
             chartData = [];
+            data.shift();
             for(let i = 0; i < data.length; i++){
                 chartData.push([new Date(data[i].timestamp), data[i].bitrate]);
             }
