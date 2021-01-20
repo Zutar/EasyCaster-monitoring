@@ -36,7 +36,6 @@ module.exports = (function(clickhouse){
                 const parametersArray = data.toString().split('=');
                 const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
                 const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
-                console.log(data);
                 //console.log(`fps: ${fps}\nbitrate: ${bitrate}\n\n`);
                 
                 const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
