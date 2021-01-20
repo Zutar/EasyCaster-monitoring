@@ -36,7 +36,7 @@
             console.log(data);
             chartData = [];
             for(let i = 0; i < data.length; i++){
-                dataPoints.push([new Date(data[i].timestamp), data[i].bitrate]);
+                chartData.push([new Date(data[i].timestamp), data[i].bitrate]);
             }
             drawChart(chartData);
         });
