@@ -33,11 +33,11 @@
         fetch('/getChart')
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             chartData = [];
             for(let i = 0; i < data.length; i++){
                 chartData.push([new Date(data[i].timestamp), data[i].bitrate]);
             }
+            console.log(data);
             drawChart(chartData);
         });
     </script>
