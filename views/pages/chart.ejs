@@ -35,6 +35,8 @@
         .then(data => {
             chartData = [];
             data.shift();
+            data.shift();
+            data.shift();
             for(let i = 0; i < data.length; i++){
                 chartData.push([new Date(data[i].timestamp), data[i].bitrate]);
             }
