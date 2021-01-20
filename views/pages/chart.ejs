@@ -3,33 +3,43 @@
 <head>
     <title>Chart</title>
     <meta charset="utf-8">
-    <script src="../static/js/dygraph.min.js"></script>
-    <link rel="stylesheet" href="../static/css/dygraph.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
 </head>
 <body>
+    <div id="chart"></div>
     <script>
         const chart = document.querySelector('#chart');
-        new Dygraph(chart, [[new Date(), 5, 10]], {
-            legend: 'always',
-            title: 'Stream monitoring',
+
+        function drawChart(data){
+            new Dygraph(
+            chart,
+            data,
+          {
+            rollPeriod: 1,
             showRoller: true,
-            rollPeriod: 14,
-            customBars: true,
-            ylabel: 'bitrate',
-        });
-    </script>
-    <div id="chart"></div>
-    <!-- 
+            customBars: false,
+            title: 'Daily bitrate',
+            ylabel: 'Bitrate',
+            legend: 'always',
+            showRangeSelector: true,
+            rangeSelectorHeight: 30,
+            rangeSelectorPlotStrokeColor: 'yellow',
+            rangeSelectorPlotFillColor: 'lightyellow'
+          }
+        );
+        }
+
         fetch('/getChart')
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            chartData = [];
             for(let i = 0; i < data.length; i++){
-                dataPoints.push({x: new Date(data[i].timestamp), y: data[i].fps});
-                dataPoints2.push({x: new Date(data[i].timestamp), y: data[i].bitrate});
+                dataPoints.push([new Date(data[i].timestamp), data[i].bitrate]);
             }
-            stockChart.render();
+            drawChart(chartData);
         });
-     -->
+    </script>
 </body>
 </html>
