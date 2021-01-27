@@ -67,9 +67,9 @@
                 chartData.push([new Date(data[i].timestamp), data[i].bitrate, data[i].fps]);
             }
         var data = new google.visualization.DataTable();
-        dataCPUMEM.addColumn('datetime',  'Date');
-        dataCPUMEM.addColumn( 'number',  'Bitrate');
-        dataCPUMEM.addColumn( 'number',  'FPS');
+        data.addColumn('datetime',  'Date');
+        data.addColumn( 'number',  'Bitrate');
+        data.addColumn( 'number',  'FPS');
         data.addRows(chartData);
         console.log(chartData);
 
