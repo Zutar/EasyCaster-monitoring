@@ -39,8 +39,17 @@
   var chart = am4core.create("chartdiv", am4charts.XYChart);
     
         
-  console.log(chartData);
-  chart.data = chartData;
+  var data = [];
+var value = 50;
+for(var i = 0; i < 300; i++){
+  var date = new Date();
+  date.setHours(0,0,0,0);
+  date.setDate(i);
+  value -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+  data.push({date:date, value: value});
+}
+
+chart.data = data;
   
   // Create axes
   var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
