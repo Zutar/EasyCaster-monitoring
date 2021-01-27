@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
 </head>
 <body>
-   <!-- Styles -->
+<!-- Styles -->
 <style>
   #chartdiv {
     width: 100%;
     height: 500px;
+    max-width: 100%;
   }
   
   </style>
@@ -24,56 +25,49 @@
   <!-- Chart code -->
   <script>
   am4core.ready(function() {
-    fetch('/getChart')
-        .then(response => response.json())
-        .then(data => {
-            chartData = [];
-            for(let i = 0; i < data.length; i++){
-                chartData.push({date: new Date(data[i].timestamp), value: data[i].bitrate});
-            }
-
+  
   // Themes begin
   am4core.useTheme(am4themes_animated);
   // Themes end
   
   var chart = am4core.create("chartdiv", am4charts.XYChart);
-    
-        
-  var data = [];
-var value = 50;
-for(var i = 0; i < 30000; i++){
-  var date = new Date();
-  date.setHours(0,0,0,0);
-  date.setDate(i);
-  value -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-  data.push({date:date, value: value});
-}
-
-chart.data = data;
+  chart.paddingRight = 20;
   
-  // Create axes
+  var data = [];
+  var visits = 10;
+  for (var i = 1; i < 100000; i++) {
+    visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+    data.push({ date: new Date(2018, 0, i), value: visits });
+  }
+  
+  chart.data = data;
+  
   var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-  dateAxis.renderer.minGridDistance = 60;
+  dateAxis.renderer.grid.template.location = 0;
+  dateAxis.minZoomCount = 5;
+  
+  
+  // this makes the data to be grouped
+  dateAxis.groupData = true;
+  dateAxis.groupCount = 500;
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
   
-  // Create series
   var series = chart.series.push(new am4charts.LineSeries());
-  series.dataFields.valueY = "value";
   series.dataFields.dateX = "date";
-  series.tooltipText = "{value}"
-  
+  series.dataFields.valueY = "value";
+  series.tooltipText = "{valueY}";
   series.tooltip.pointerOrientation = "vertical";
+  series.tooltip.background.fillOpacity = 0.5;
   
   chart.cursor = new am4charts.XYCursor();
-  chart.cursor.snapToSeries = series;
   chart.cursor.xAxis = dateAxis;
   
-  //chart.scrollbarY = new am4core.Scrollbar();
-  chart.scrollbarX = new am4core.Scrollbar();
+  var scrollbarX = new am4core.Scrollbar();
+  scrollbarX.marginBottom = 20;
+  chart.scrollbarX = scrollbarX;
   
   }); // end am4core.ready()
-});
   </script>
   
   <!-- HTML -->
