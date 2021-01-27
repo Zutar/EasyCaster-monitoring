@@ -48,18 +48,22 @@
     <div id="container"></div>
     <script>
     anychart.onDocumentReady(function () {
-       
+      fetch('/getChart')
+        .then(response => response.json())
+        .then(data => {
+            chartData = [];
+            data.shift();
+            data.shift();
+            data.shift();
+            for(let i = 0; i < data.length; i++){
+              
+                chartData.push([new Date(data[i].timestamp), 24.36, 24.53, 24.16, data[i].bitrate, 29955800]);
+            }
         // the data used in this sample can be obtained from the CDN
         // https://cdn.anychart.com/csv-data/csco-daily.js
         // create a data table using this data
         var dataTable = anychart.data.table();
-        dataTable.addData([
-    ['2004-01-02', 24.36, 24.53, 24.16, 24.25, 29955800],
-    ['2004-01-05', 24.4, 24.84, 24.38, 24.77, 38892100],
-    ['2004-01-06', 24.83, 25.1, 24.75, 25.06, 43684400],
-    ['2004-01-07', 25.17, 25.73, 24.85, 25.56, 48757500],
-    ['2004-01-08', 25.84, 26.55, 25.48, 26.34, 61683300],
-  ]);
+        dataTable.addData(chartData);
     
         // map the data
         var mapping = dataTable.mapAs({"value": 4});
@@ -104,6 +108,7 @@
         // initiate drawing the chart
         chart.draw();
     });
+  });
     </script>
     </div>
 </body>
