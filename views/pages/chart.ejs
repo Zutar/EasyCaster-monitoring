@@ -3,106 +3,57 @@
 <head>
     <title>Chart</title>
     <meta charset="utf-8">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+    html, body, #container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+  <div id="anychart-embed-samples-stock-drawing-vertical-line-02" class="anychart-embed anychart-embed-samples-stock-drawing-vertical-line-02">
     <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
     <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-stock.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
     <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-annotations.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
     <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
     <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
     <script src="https://cdn.anychart.com/csv-data/csco-daily-short.js"></script>
-    <style>
-      html, body, #container {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-</head>
-<body>
-    <div id="chart"></div>
+    <div id="ac_style_samples-stock-drawing-vertical-line-02" style="display:none;">
+
+    </div>
     <script>
-        /*
-        const chart = document.querySelector('#chart');
-
-        function drawChart(data){
-            new Dygraph(
-            chart,
-            data,
-          {
-            rollPeriod: 1,
-            showRoller: true,
-            customBars: true,
-            //logscale: true,
-            errorBars: true,
-            title: 'Daily bitrate',
-            ylabel: 'Bitrate',
-            legend: 'always',
-            valueRange: [0, 3000],
-            showRangeSelector: true,
-            rangeSelectorHeight: 30,
-            rangeSelectorPlotStrokeColor: 'yellow',
-            rangeSelectorPlotFillColor: 'lightyellow'
-          }
-        );
-        }
-
-        fetch('/getChart')
-        .then(response => response.json())
-        .then(data => {
-            chartData = [];
-            data.shift();
-            data.shift();
-            data.shift();
-            for(let i = 0; i < data.length; i++){
-                chartData.push([new Date(data[i].timestamp), data[i].bitrate]);
-            }
-            console.log(chartData);
-            drawChart(chartData);
-        });
-        */
+    (function(){
+    function ac_add_to_head(el){
+      var head = document.getElementsByTagName('head')[0];
+      head.insertBefore(el,head.firstChild);
+    }
+    function ac_add_link(url){
+      var el = document.createElement('link');
+      el.rel='stylesheet';el.type='text/css';el.media='all';el.href=url;
+      ac_add_to_head(el);
+    }
+    function ac_add_style(css){
+      var ac_style = document.createElement('style');
+      if (ac_style.styleSheet) ac_style.styleSheet.cssText = css;
+      else ac_style.appendChild(document.createTextNode(css));
+      ac_add_to_head(ac_style);
+    }
+    ac_add_link('https://cdn.anychart.com/releases/8.9.0/css/anychart-ui.min.css?hcode=a0c21fc77e1449cc86299c5faa067dc4');
+    ac_add_style(document.getElementById("ac_style_samples-stock-drawing-vertical-line-02").innerHTML);
+    ac_add_style(".anychart-embed-samples-stock-drawing-vertical-line-02{width:600px;height:450px;}");
+    })();
     </script>
-      <script type='text/javascript'>
-    /*
-      google.charts.load('current', {'packages':['annotationchart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        fetch('/getChart')
-        .then(response => response.json())
-        .then(data => {
-            chartData = [];
-            data.shift();
-            data.shift();
-            data.shift();
-            for(let i = 0; i < data.length; i++){
-                chartData.push([new Date(data[i].timestamp), data[i].bitrate, data[i].fps]);
-            }
-        var data = new google.visualization.DataTable();
-        data.addColumn('datetime',  'Date');
-        data.addColumn( 'number',  'Bitrate');
-        data.addColumn( 'number',  'FPS');
-        data.addRows(chartData);
-        console.log(chartData);
-
-        var chart = new google.visualization.AnnotationChart(document.getElementById('chart'));
-
-        chart.draw(data);
-
-      });
-      }
-    */
-    </script>
+    <div id="container"></div>
     <script>
-      anychart.onDocumentReady(function () {
-   
-   // the data used in this sample can be obtained from the CDN
-   // https://cdn.anychart.com/csv-data/csco-daily.js
-   // create a data table using this data
-   var dataTable = anychart.data.table();
-   dataTable.addData([
+    anychart.onDocumentReady(function () {
+       
+        // the data used in this sample can be obtained from the CDN
+        // https://cdn.anychart.com/csv-data/csco-daily.js
+        // create a data table using this data
+        var dataTable = anychart.data.table();
+        dataTable.addData([
     ['2015-12-24', 511.53, 514.98],
     ['2015-12-25', 512.53, 514.88],
     ['2015-12-26', 511.83, 514.98],
@@ -113,50 +64,51 @@
     ['2015-12-31', 511.22, 515.30],
     ['2016-01-01', 510.35, 515.72]
 ]);
-
-   // map the data
-   var mapping = dataTable.mapAs({"value": 4});
-
-   // create a stock chart
-   var chart = anychart.stock();
-
-   // create a plot on the chart
-   var plot = chart.plot(0);
-
-   // create a line series
-   var lineSeries = plot.line(mapping);
-   lineSeries.name("CSCO");
-
-   // access the annotations() object of the plot to work with annotations
-   var controller = plot.annotations();
-
-   // create the first Vertical Line annotation and configure its visual settings
-   var verticalLine1 = controller.verticalLine({
-xAnchor: "2007-09-23",
-hovered: {stroke: "2 #ff0000"},
-selected: {stroke: "4 #ff0000"}
-   });
-
-   // create the second Vertical Line annotation
-   var verticalLine2 = controller.verticalLine();
-
-   // set the position of the second annotation
-   verticalLine2.xAnchor("2005-05-22");
     
-   // configure the visual settings of the second annotation
-   verticalLine2.normal().stroke("#006600", 1, "10 2");
-   verticalLine2.hovered().stroke("#00b300", 2, "10 2");
-   verticalLine2.selected().stroke("#00b300", 4, "10 2");
-
-   // set the chart title
-   chart.title("Vertical Line: Appearance");
-
-   // set the container id
-   chart.container("chart");
-
-   // initiate drawing the chart
-   chart.draw();
-});
+        // map the data
+        var mapping = dataTable.mapAs({"value": 4});
+    
+        // create a stock chart
+        var chart = anychart.stock();
+    
+        // create a plot on the chart
+        var plot = chart.plot(0);
+    
+        // create a line series
+        var lineSeries = plot.line(mapping);
+        lineSeries.name("CSCO");
+    
+        // access the annotations() object of the plot to work with annotations
+        var controller = plot.annotations();
+    
+        // create the first Vertical Line annotation and configure its visual settings
+        var verticalLine1 = controller.verticalLine({
+    xAnchor: "2007-09-23",
+    hovered: {stroke: "2 #ff0000"},
+    selected: {stroke: "4 #ff0000"}
+        });
+    
+        // create the second Vertical Line annotation
+        var verticalLine2 = controller.verticalLine();
+    
+        // set the position of the second annotation
+        verticalLine2.xAnchor("2005-05-22");
+         
+        // configure the visual settings of the second annotation
+        verticalLine2.normal().stroke("#006600", 1, "10 2");
+        verticalLine2.hovered().stroke("#00b300", 2, "10 2");
+        verticalLine2.selected().stroke("#00b300", 4, "10 2");
+    
+        // set the chart title
+        chart.title("Vertical Line: Appearance");
+    
+        // set the container id
+        chart.container("container");
+    
+        // initiate drawing the chart
+        chart.draw();
+    });
     </script>
+    </div>
 </body>
 </html>
