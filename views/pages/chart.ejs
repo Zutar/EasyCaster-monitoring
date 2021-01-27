@@ -66,7 +66,7 @@
         dataTable.addData(chartData);
     
         // map the data
-        var mapping = dataTable.mapAs({"value": 4});
+        var mapping = dataTable.mapAs({"value": 1});
     
         // create a stock chart
         var chart = anychart.stock();
@@ -76,7 +76,7 @@
     
         // create a line series
         var lineSeries = plot.line(mapping);
-        lineSeries.name("CSCO");
+        lineSeries.name("Bitrate");
     
         // access the annotations() object of the plot to work with annotations
         var controller = plot.annotations();
@@ -100,7 +100,7 @@
         verticalLine2.selected().stroke("#00b300", 4, "10 2");
     
         // set the chart title
-        chart.title("Vertical Line: Appearance");
+        chart.title("Stream bitrate");
     
         // set the container id
         chart.container("container");
