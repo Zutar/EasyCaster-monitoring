@@ -53,7 +53,7 @@ module.exports = (function(clickhouse){
     });
 
     router.get('/getChart', (req, res) => {
-        const query = `SELECT * FROM stream_data;`;
+        const query = `SELECT * FROM stream_data LIMIT 1000;`;
         clickhouse.query(query).exec(function (err, rows) {
             res.send(rows);
         });
