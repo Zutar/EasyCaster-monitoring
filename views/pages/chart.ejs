@@ -64,16 +64,12 @@
             data.shift();
             data.shift();
             for(let i = 0; i < data.length; i++){
-                chartData.push([new Date(data[i].timestamp), data[i].bitrate, null, null, data[i].fps, null, null]);
+                chartData.push([new Date(data[i].timestamp), data[i].bitrate, data[i].fps]);
             }
         var data = new google.visualization.DataTable();
-        data.addColumn('date', 'Date');
-        data.addColumn('number', 'Bitrate');
-        data.addColumn('string', 'Kepler title');
-        data.addColumn('string', 'Kepler text');
-        data.addColumn('number', 'FPS');
-        data.addColumn('string', 'Gliese title');
-        data.addColumn('string', 'Gliese text');
+        dataCPUMEM.addColumn('datetime',  'Date');
+        dataCPUMEM.addColumn( 'number',  'Bitrate');
+        dataCPUMEM.addColumn( 'number',  'FPS');
         data.addRows(chartData);
         console.log(chartData);
 
