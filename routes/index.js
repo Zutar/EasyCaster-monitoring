@@ -53,7 +53,7 @@ module.exports = (function(clickhouse){
     });
 
     router.get('/getChart', (req, res) => {
-        const query = `SELECT * FROM stream_data ORDER BY DESC LIMIT 10000;`;
+        const query = `SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 10000;`;
         clickhouse.query(query).exec(function (err, rows) {
             res.send(rows);
         });
