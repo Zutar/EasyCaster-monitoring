@@ -52,12 +52,9 @@
         .then(response => response.json())
         .then(data => {
             chartData = [];
-            data.shift();
-            data.shift();
-            data.shift();
             for(let i = 0; i < data.length; i++){
               
-                chartData.push([new Date(data[i].timestamp), 24.36, 24.53, 24.16, data[i].bitrate, 29955800]);
+                chartData.push([new Date(data[i].timestamp), 24.36, data[i].fps, data[i].bitrate, 29955800]);
             }
         // the data used in this sample can be obtained from the CDN
         // https://cdn.anychart.com/csv-data/csco-daily.js
@@ -66,7 +63,8 @@
         dataTable.addData(chartData);
     
         // map the data
-        var mapping = dataTable.mapAs({"value": 1});
+        var mapping = dataTable.mapAs({"value": 4});
+        var mapping1 = dataSet.mapAs({"value": 3});
     
         // create a stock chart
         var chart = anychart.stock();
@@ -76,8 +74,9 @@
     
         // create a line series
         var lineSeries = plot.line(mapping);
+        var lineSeries1 = plot1.line(mapping);
         lineSeries.name("Bitrate");
-    
+        lineSeries.name("Fps");
         // access the annotations() object of the plot to work with annotations
         var controller = plot.annotations();
     
