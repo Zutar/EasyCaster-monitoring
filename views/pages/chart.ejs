@@ -74,7 +74,15 @@
         data.addColumn('number', 'Gliese 163 mission');
         data.addColumn('string', 'Gliese title');
         data.addColumn('string', 'Gliese text');
-        data.addRows(chartData);
+        data.addRows([
+          [new Date(2314, 2, 15), 12400, undefined, undefined,
+                                  0, undefined, undefined],
+          [new Date(2314, 2, 16), 24045, undefined, undefined,
+                                  0, undefined, undefined],
+          [new Date(2314, 2, 20), 0, undefined, undefined,
+                                  0, undefined, undefined]
+        ]);
+        console.log(chartData);
 
         var chart = new google.visualization.AnnotationChart(document.getElementById('chart'));
 
