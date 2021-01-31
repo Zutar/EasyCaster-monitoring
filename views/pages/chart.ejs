@@ -28,6 +28,7 @@
     fetch('/getChart')
         .then(response => response.json())
         .then(data => {
+            data = data.reverse();
             chartData = [];
             for(let i = 0; i < data.length; i++){
                 chartData.push({ date: new Date(data[i].timestamp), value: data[i].bitrate });
