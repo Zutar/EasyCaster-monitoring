@@ -25,7 +25,15 @@
   <!-- Chart code -->
   <script>
   am4core.ready(function() {
-  
+    fetch('/getChart')
+        .then(response => response.json())
+        .then(data => {
+            chartData = [];
+            for(let i = 0; i < data.length; i++){
+                chartData.push({ date: new Date(data[i].timestamp), value: data[i].bitrate });
+            }
+
+       
   // Themes begin
   am4core.useTheme(am4themes_animated);
   // Themes end
@@ -33,14 +41,7 @@
   var chart = am4core.create("chartdiv", am4charts.XYChart);
   chart.paddingRight = 20;
   
-  var data = [];
-  var visits = 10;
-  for (var i = 1; i < 500000; i++) {
-    visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-    data.push({ date: new Date(2018, 0, i), value: visits });
-  }
-  
-  chart.data = data;
+  chart.data = chartData;
   
   var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
   dateAxis.renderer.grid.template.location = 0;
@@ -49,7 +50,7 @@
   
   // this makes the data to be grouped
   dateAxis.groupData = true;
-  dateAxis.groupCount = 1000;
+  dateAxis.groupCount = 100;
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
   
@@ -66,7 +67,7 @@
   var scrollbarX = new am4core.Scrollbar();
   scrollbarX.marginBottom = 20;
   chart.scrollbarX = scrollbarX;
-  
+});
   }); // end am4core.ready()
   </script>
   
