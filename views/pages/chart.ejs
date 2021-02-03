@@ -3,6 +3,8 @@
 <head>
     <title>Chart</title>
     <meta charset="utf-8">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
 </head>
 <body>
 <!-- Styles -->
@@ -19,9 +21,9 @@
   <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
   <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
   <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-    <!-- Chart code -->
+  
+  <!-- Chart code -->
   <script>
-    /*
   am4core.ready(function() {
     fetch('/getChart')
         .then(response => response.json())
@@ -38,88 +40,36 @@
   // Themes end
   
   var chart = am4core.create("chartdiv", am4charts.XYChart);
-
-  // Add data
+  chart.paddingRight = 20;
   console.log(chartData);
-chart.data = chartData;
-
-// Create axes
-var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-dateAxis.renderer.minGridDistance = 50;
-
-var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-// Create series
-var series = chart.series.push(new am4charts.LineSeries());
-series.dataFields.valueY = "visits";
-series.dataFields.dateX = "date";
-series.strokeWidth = 2;
-series.minBulletDistance = 10;
-series.tooltipText = "{valueY}";
-series.tooltip.pointerOrientation = "vertical";
-series.tooltip.background.cornerRadius = 20;
-series.tooltip.background.fillOpacity = 0.5;
-series.tooltip.label.padding(12,12,12,12)
-
-// Add scrollbar
-chart.scrollbarX = new am4charts.XYChartScrollbar();
-chart.scrollbarX.series.push(series);
-
-// Add cursor
-chart.cursor = new am4charts.XYCursor();
-chart.cursor.xAxis = dateAxis;
-chart.cursor.snapToSeries = series;
-
+  chart.data = chartData;
+  
+  var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+  dateAxis.renderer.grid.template.location = 0;
+  dateAxis.minZoomCount = 5;
+  
+  
+  // this makes the data to be grouped
+  dateAxis.groupData = true;
+  dateAxis.groupCount = 50;
+  
+  var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  
+  var series = chart.series.push(new am4charts.LineSeries());
+  series.dataFields.dateX = "date";
+  series.dataFields.valueY = "value";
+  series.tooltipText = "{valueY}";
+  series.tooltip.pointerOrientation = "vertical";
+  series.tooltip.background.fillOpacity = 0.5;
+  
+  chart.cursor = new am4charts.XYCursor();
+  chart.cursor.xAxis = dateAxis;
+  
+  var scrollbarX = new am4core.Scrollbar();
+  scrollbarX.marginBottom = 20;
+  chart.scrollbarX = scrollbarX;
 });
   }); // end am4core.ready()
-  */
-  am4core.ready(function() {
-    fetch('/getChart')
-        .then(response => response.json())
-        .then(data => {
-            data = data.reverse();
-            chartData = [];
-            for(let i = 0; i < data.length; i++){
-                chartData.push({ date: new Date(data[i].timestamp), visits: data[i].bitrate });
-            }
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
-
-// Create chart instance
-var chart = am4core.create("chartdiv", am4charts.XYChart);
-console.log(chartData);
-// Add data
-chart.data = chartData;
-
-// Create axes
-var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-dateAxis.renderer.minGridDistance = 50;
-
-var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-// Create series
-var series = chart.series.push(new am4charts.LineSeries());
-series.dataFields.valueY = "visits";
-series.dataFields.dateX = "date";
-series.strokeWidth = 2;
-series.minBulletDistance = 10;
-series.tooltipText = "{valueY}";
-series.tooltip.pointerOrientation = "vertical";
-series.tooltip.background.cornerRadius = 20;
-series.tooltip.background.fillOpacity = 0.5;
-series.tooltip.label.padding(12,12,12,12)
-
-// Add scrollbar
-chart.scrollbarX = new am4charts.XYChartScrollbar();
-chart.scrollbarX.series.push(series);
-
-// Add cursor
-chart.cursor = new am4charts.XYCursor();
-chart.cursor.xAxis = dateAxis;
-chart.cursor.snapToSeries = series;
-});
-}); // end am4core.ready()
   </script>
   
   <!-- HTML -->
