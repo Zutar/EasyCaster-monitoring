@@ -50,11 +50,15 @@
 
    // this makes the data to be grouped
    dateAxis.groupData = true;
-  dateAxis.groupCount = 100;
+  dateAxis.groupCount = 1000;
 
   //dateAxis.groupInterval = { timeUnit: "hour", count: 100 };
 
-
+  dateAxis.groupIntervals.setAll([
+  { timeUnit: "second", count: 3000 },
+  { timeUnit: "minute", count: 2000 },
+  { timeUnit: "hour", count: 1000}
+]);
 
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
