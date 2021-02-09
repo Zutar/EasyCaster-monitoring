@@ -9,6 +9,7 @@ module.exports = (function(clickhouse){
     const cmdArray = cmd.split(' ');
     const firstCmdItem = cmdArray.shift();
     let child = null;
+    let counter = 0;
     
 
     router.use(bodyParser.json({limit:'5mb'}));
@@ -33,15 +34,21 @@ module.exports = (function(clickhouse){
             if(data.indexOf('fps') !== -1 && 
                data.indexOf('bitrate') !== -1 && 
                data.indexOf('frame') !== -1){
-                const parametersArray = data.toString().split('=');
-                const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
-                const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
-                //console.log(`fps: ${fps}\nbitrate: ${bitrate}\n\n`);
-                
-                const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
-                clickhouse.query(query).exec(function (err, rows) {
-                    //console.log(rows);
-                });
+
+                if(counter === 5){
+                    const parametersArray = data.toString().split('=');
+                    const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
+                    const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
+                    //console.log(`fps: ${fps}\nbitrate: ${bitrate}\n\n`);
+                    
+                    const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
+                    clickhouse.query(query).exec(function (err, rows) {
+                        //console.log(rows);
+                        counter = 0;
+                    });
+                }else{
+                    counter++;
+                }
             }
         });
 
@@ -53,7 +60,7 @@ module.exports = (function(clickhouse){
     });
 
     router.get('/getChart', (req, res) => {
-        const query = `SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 35000 OFFSET 100;`;
+        const query = `SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 25000 OFFSET 100;`;
         clickhouse.query(query).exec(function (err, rows) {
             res.send(rows);
         });
