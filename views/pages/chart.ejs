@@ -47,18 +47,6 @@
   var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
   dateAxis.renderer.grid.template.location = 0;
   dateAxis.minZoomCount = 5;
-
-  var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-  // Fix axis scale on load
-  chart.events.on("ready", function(ev) {
-    valueAxis.min = valueAxis.minZoomed;
-    valueAxis.max = valueAxis.maxZoomed;
-    valueAxis.min = 0;
-    valueAxis.max = 3000;
-    valueAxis.strictMinMax = true; 
-  });
-
-  
   
   // this makes the data to be grouped
   dateAxis.groupData = true;
@@ -75,6 +63,12 @@
 ]);
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  valueAxis.min = valueAxis.minZoomed;
+    valueAxis.max = valueAxis.maxZoomed;
+    valueAxis.min = 0;
+    valueAxis.max = 3000;
+    valueAxis.strictMinMax = true; 
+
   
   var series = chart.series.push(new am4charts.LineSeries());
   series.dataFields.dateX = "date";
