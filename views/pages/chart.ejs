@@ -53,7 +53,11 @@
   chart.events.on("ready", function(ev) {
     valueAxis.min = valueAxis.minZoomed;
     valueAxis.max = valueAxis.maxZoomed;
+    valueAxis.min = 0;
+    valueAxis.max = 3000;
+    valueAxis.strictMinMax = true; 
   });
+
   
   
   // this makes the data to be grouped
@@ -63,11 +67,11 @@
   //dateAxis.groupInterval = { timeUnit: "hour", count: 100 };
 
   dateAxis.groupIntervals.setAll([
-  { timeUnit: "second", count: 20 },
-  { timeUnit: "second", count: 20 },
-  { timeUnit: "minute", count: 20 },
-  { timeUnit: "minute", count: 20 },
-  { timeUnit: "hour", count: 20 }
+  { timeUnit: "second", count: 5 },
+  { timeUnit: "second", count: 5 },
+  { timeUnit: "minute", count: 5 },
+  { timeUnit: "minute", count: 5 },
+  { timeUnit: "hour", count: 5 }
 ]);
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
