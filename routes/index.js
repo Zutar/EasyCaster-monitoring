@@ -35,7 +35,7 @@ module.exports = (function(clickhouse){
                data.indexOf('bitrate') !== -1 && 
                data.indexOf('frame') !== -1){
 
-                if(counter === 5){
+                if(counter >= 5){
                     const parametersArray = data.toString().split('=');
                     const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
                     const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
