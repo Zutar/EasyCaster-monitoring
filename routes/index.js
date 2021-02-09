@@ -5,7 +5,7 @@ module.exports = (function(clickhouse){
     const { spawn } = require('child_process');
     const router = express.Router();
 
-    const cmd = 'ffmpeg -i rtmp://cdn10.live-tv.dev:1935/it3od/720p -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316';
+    const cmd = 'ffmpeg -i rtmp://cdn10.live-tv.od.ua/7tvod/7tvod -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316';
     const cmdArray = cmd.split(' ');
     const firstCmdItem = cmdArray.shift();
     let child = null;
