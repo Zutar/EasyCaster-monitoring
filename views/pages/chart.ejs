@@ -47,12 +47,20 @@
   var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
   dateAxis.renderer.grid.template.location = 0;
   dateAxis.minZoomCount = 5;
+
+  var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  // Fix axis scale on load
+  chart.events.on("ready", function(ev) {
+    valueAxis.min = valueAxis.minZoomed;
+    valueAxis.max = valueAxis.maxZoomed;
+  });
   
   
   // this makes the data to be grouped
   dateAxis.groupData = true;
   dateAxis.groupCount = 5;
-  dateAxis.groupInterval = { timeUnit: "hour", count: 100 };
+
+  //dateAxis.groupInterval = { timeUnit: "hour", count: 100 };
 
   dateAxis.groupIntervals.setAll([
   { timeUnit: "millisecond", count: 1 },
