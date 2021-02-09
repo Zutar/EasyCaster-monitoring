@@ -52,7 +52,7 @@
   // this makes the data to be grouped
   dateAxis.groupData = true;
   dateAxis.groupCount = 5;
-  dateAxis.groupInterval = { timeUnit: "hour", count: 1 };
+  dateAxis.groupInterval = { timeUnit: "hour", count: 100 };
 
   dateAxis.groupIntervals.setAll([
   { timeUnit: "millisecond", count: 1 },
@@ -62,8 +62,7 @@
   { timeUnit: "second", count: 10 },
   { timeUnit: "minute", count: 1 },
   { timeUnit: "minute", count: 10 },
-  { timeUnit: "hour", count: 1 },
-  { timeUnit: "day", count: 1 }
+  { timeUnit: "hour", count: 1 }
 ]);
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
