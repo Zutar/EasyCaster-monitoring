@@ -48,6 +48,14 @@
   dateAxis.renderer.grid.template.location = 0;
   dateAxis.minZoomCount = 5;
 
+   // this makes the data to be grouped
+   dateAxis.groupData = true;
+  dateAxis.groupCount = 5;
+
+  //dateAxis.groupInterval = { timeUnit: "hour", count: 100 };
+
+
+
   
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
   valueAxis.min = valueAxis.minZoomed;
