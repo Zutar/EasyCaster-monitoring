@@ -51,7 +51,8 @@
   
   // this makes the data to be grouped
   dateAxis.groupData = true;
-  dateAxis.groupCount = 1;
+  dateAxis.groupCount = 5;
+  dateAxis.groupInterval = { timeUnit: "hour", count: 1 };
 
   dateAxis.groupIntervals.setAll([
   { timeUnit: "millisecond", count: 1 },
