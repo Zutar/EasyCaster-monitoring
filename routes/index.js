@@ -5,7 +5,7 @@ module.exports = (function(clickhouse){
     const { spawn } = require('child_process');
     const router = express.Router();
 
-    const cmd = 'ffmpeg -i rtmp://cdn10.live-tv.od.ua/7tvod/7tvod -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316';
+    const cmd = 'ffmpeg -i rtmp://cdn-br2.live-tv.cloud:1935/odlive/1080i -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316';
     const cmdArray = cmd.split(' ');
     const firstCmdItem = cmdArray.shift();
     let child = null;
@@ -60,7 +60,7 @@ module.exports = (function(clickhouse){
     });
 
     router.get('/getChart', (req, res) => {
-        const query = `SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 25000 OFFSET 100;`;
+        const query = `SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 35000 OFFSET 100;`;
         clickhouse.query(query).exec(function (err, rows) {
             res.send(rows);
         });
