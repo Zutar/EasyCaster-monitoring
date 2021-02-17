@@ -42,7 +42,7 @@ module.exports = (function(client){
                 const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
                 
                 client.query(query, (error, result, fields) => {
-                    console.log(error);
+                    
                 });
             }
         });
