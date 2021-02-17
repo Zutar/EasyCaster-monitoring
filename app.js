@@ -1,38 +1,30 @@
 const express = require('express');
 const config = require('./config');
-const { ClickHouse } = require('clickhouse');
+const {Pool} = require('pg');
+
+const conectionString= `postgressql://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}?sslmode=disable`
+console.log(conectionString);
+const client= new Pool({
+    connectionString:conectionString
+})
 
 
-const clickhouse = new ClickHouse({
-    url: 'http://localhost',
-    port: 8123,
-    debug: true,
-    basicAuth: {
-        username: 'default',
-        password: '',
-        },
-    isUseGzip: false,
-    format: "json", // "json" || "csv" || "tsv"
-    config: {
-        session_id                              : 'session_id if neeed',
-        session_timeout                         : 60,
-        output_format_json_quote_64bit_integers : 0,
-        enable_http_compression                 : 0,
-        database                                : 'monitoring',
+client.connect((err) => {
+    console.log('c');
+    if (err) {
+        return console.error("Error: " + err.message);
     }
-});
+    else{   
+        console.log("Connection to MySQL server successfully established");
 
+        const index = require('./routes/index')(client);
+        const app = express();
 
+        app.use('/', index);
+        app.set('view engine', 'ejs');
 
-const index = require('./routes/index')(clickhouse);
-
-const app = express();
-
-app.use('/', index);
-app.set('view engine', 'ejs');
-
-console.log();
-
-app.listen(config.port, () => {
-    console.log(`App listening at http://localhost:${config.port}`);
+        app.listen(config.port, () => {
+            console.log(`App listening at http://localhost:${config.port}`);
+        });
+    }
 });

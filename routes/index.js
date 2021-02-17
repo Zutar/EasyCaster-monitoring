@@ -1,15 +1,14 @@
-module.exports = (function(clickhouse){
+module.exports = (function(client){
     'use strict'
     const express = require('express');
     const bodyParser = require('body-parser');
     const { spawn } = require('child_process');
     const router = express.Router();
 
-    const cmd = 'ffmpeg -i rtmp://cdn-br2.live-tv.cloud:1935/odlive/1080i -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316';
+    const cmd = 'ffmpeg -i rtmp://cdn10.live-tv.od.ua:1935/odlive/720p -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316';
     const cmdArray = cmd.split(' ');
     const firstCmdItem = cmdArray.shift();
     let child = null;
-    let counter = 0;
     
 
     router.use(bodyParser.json({limit:'5mb'}));
@@ -29,28 +28,25 @@ module.exports = (function(clickhouse){
         }
         
         child = spawn(firstCmdItem, cmdArray);
-
+        
         child.stderr.on('data', (data) => {
             if(data.indexOf('fps') !== -1 && 
-               data.indexOf('bitrate') !== -1 && 
-               data.indexOf('frame') !== -1){
+                data.indexOf('bitrate') !== -1 && 
+                data.indexOf('frame') !== -1){
+                
+                const parametersArray = data.toString().split('=');
+                const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
+                const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
 
-                if(counter >= 5){
-                    const parametersArray = data.toString().split('=');
-                    const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
-                    const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
-                    //console.log(`fps: ${fps}\nbitrate: ${bitrate}\n\n`);
-                    
-                    const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
-                    clickhouse.query(query).exec(function (err, rows) {
-                        //console.log(rows);
-                        counter = 0;
-                    });
-                }else{
-                    counter++;
-                }
+                const time = new Date();
+                const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
+                
+                client.query(query, (error, result, fields) => {
+                    console.log(error);
+                });
             }
         });
+        
 
         res.render('./pages/index.ejs');
     });
@@ -60,9 +56,22 @@ module.exports = (function(clickhouse){
     });
 
     router.get('/getChart', (req, res) => {
-        const query = `SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 2400 OFFSET 2400;`;
-        clickhouse.query(query).exec(function (err, rows) {
-            res.send(rows);
+        const query = `SELECT series.minute as datetime, coalesce(cnt.amnt, 0) as bitrate from (
+            SELECT AVG(bitrate) amnt,
+            to_timestamp(floor((extract('epoch' from timestamp) / 5 )) * 5)
+            AT TIME ZONE 'UTC' as interval_alias
+            from stream_data group by interval_alias
+            ) cnt
+         
+         RIGHT JOIN 
+            (    
+            SELECT generate_series(min(date_trunc('hour',timestamp)),
+            max(date_trunc('minute',timestamp)),'5s') as minute from stream_data
+            ) series
+       on series.minute = cnt.interval_alias;`;//`SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 2400 OFFSET 2400;`;
+
+        client.query(query, (error, result, fields) => {
+            res.send(result.rows);
         });
     });
 
