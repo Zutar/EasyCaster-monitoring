@@ -51,10 +51,9 @@
           dateAxis.groupCount = 2500;
             
           let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-          valueAxis.min = 1;
+          valueAxis.min = 0;
           valueAxis.max = 4000;
-          valueAxis.renderer.minGridDistance = 10;
-          valueAxis.logarithmic = true;
+          valueAxis.renderer.minGridDistance = 5;
 
             
           // Create series
