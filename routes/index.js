@@ -68,7 +68,7 @@ module.exports = (function(client){
             SELECT generate_series(min(date_trunc('hour',timestamp)),
             max(date_trunc('minute',timestamp)),'5s') as minute from stream_data
             ) series
-       on series.minute = cnt.interval_alias;`;//`SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 2400 OFFSET 2400;`;
+       on series.minute = cnt.interval_alias ORDER BY datetime LIMIT 17280 OFFSET 0;`;//`SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 2400 OFFSET 2400;`;
 
         client.query(query, (error, result, fields) => {
             res.send(result.rows);
