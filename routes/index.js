@@ -73,7 +73,7 @@ module.exports = (function(influx){
             ) series
        on series.minute = cnt.interval_alias ORDER BY datetime LIMIT 17280 OFFSET 0;`;
 
-        influx.query(`SELECT round(mean("bitrate") * 1) / 1 AS "bitrate", round(mean("fps") * 1) / 1 AS "fps" FROM stream_data WHERE time > now() - 2h GROUP BY time(5s) FILL(0)`).then(result => {
+        influx.query(`SELECT round(mean("bitrate") * 1) / 1 AS "bitrate", round(mean("fps") * 1) / 1 AS "fps", min("bitrate") AS  "min_bitrate" FROM stream_data WHERE time > now() - 2d GROUP BY time(1m) FILL(0)`).then(result => {
             res.json(result);
         }).catch(err => {
             res.status(500).send(err.stack);
