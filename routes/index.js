@@ -1,4 +1,4 @@
-module.exports = (function(client){
+module.exports = (function(influx){
     'use strict'
     const express = require('express');
     const bodyParser = require('body-parser');
@@ -38,12 +38,15 @@ module.exports = (function(client){
                 const fps = parseInt(parametersArray[2].trim().split(' ')[0]);
                 const bitrate = parseInt(parametersArray[6].trim().split(' ')[0]);
 
-                const time = new Date();
-                const query = `INSERT INTO stream_data VALUES(now(), ${fps}, ${bitrate});`;
-                
-                client.query(query, (error, result, fields) => {
-                    
-                });
+                influx.writePoints([
+                    {
+                      measurement: 'stream_data',
+                      tags: { stream: '1' },
+                      fields: { bitrate: bitrate, fps: fps },
+                    }
+                  ]).catch(err => {
+                    console.error(`Error saving data to InfluxDB! ${err.stack}`)
+                  })
             }
         });
         
@@ -68,11 +71,13 @@ module.exports = (function(client){
             SELECT generate_series(min(date_trunc('hour',timestamp)),
             max(date_trunc('minute',timestamp)),'5s') as minute from stream_data
             ) series
-       on series.minute = cnt.interval_alias ORDER BY datetime LIMIT 17280 OFFSET 0;`;//`SELECT * FROM stream_data ORDER BY timestamp DESC LIMIT 2400 OFFSET 2400;`;
+       on series.minute = cnt.interval_alias ORDER BY datetime LIMIT 17280 OFFSET 0;`;
 
-        client.query(query, (error, result, fields) => {
-            res.send(result.rows);
-        });
+        influx.query(`SELECT mean("bitrate") AS "bitrate", mean("fps") AS "fps" FROM stream_data WHERE time > now() - 2d GROUP BY time(5s) FILL(0)`).then(result => {
+            res.json(result);
+        }).catch(err => {
+            res.status(500).send(err.stack);
+        })
     });
 
     

@@ -29,7 +29,7 @@
           console.log(data);
           chartData = [];
           for(let i = 0; i < data.length; i++){
-            chartData.push({ date: new Date(data[i].datetime), bitrate: data[i].bitrate, min: 0 });
+            chartData.push({ date: new Date(data[i].time), bitrate: data[i].bitrate, min: 0 });
           }
        
           // Themes begin

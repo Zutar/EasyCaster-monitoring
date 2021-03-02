@@ -1,30 +1,43 @@
 const express = require('express');
 const config = require('./config');
-const {Pool} = require('pg');
+const Influx = require('influx');
 
-const conectionString= `postgressql://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}?sslmode=disable`
-console.log(conectionString);
-const client= new Pool({
-    connectionString:conectionString
-})
+//var root = new influxdb.InfluxDB('141.105.134.188', 8086, 'root', 'root');
 
+const influx = new Influx.InfluxDB({
+    host: config.db.host,
+    database: 'monitoring',
+    schema: [
+      {
+        measurement: 'stream_data',
+        fields: {
+          bitrate: Influx.FieldType.INTEGER,
+          fps: Influx.FieldType.INTEGER
+        },
+        tags: [
+          'stream'
+        ]
+      }
+    ]
+  })
 
-client.connect((err) => {
-    console.log('c');
-    if (err) {
-        return console.error("Error: " + err.message);
+  influx.getDatabaseNames()
+  .then(names => {
+    if (!names.includes('monitoring')) {
+      return influx.createDatabase('monitoring');
     }
-    else{   
-        console.log("Connection to MySQL server successfully established");
+  })
+  .then(() => {
+    const index = require('./routes/index')(influx);
+    const app = express();
 
-        const index = require('./routes/index')(client);
-        const app = express();
+    app.use('/', index);
+    app.set('view engine', 'ejs');
 
-        app.use('/', index);
-        app.set('view engine', 'ejs');
-
-        app.listen(config.port, () => {
-            console.log(`App listening at http://localhost:${config.port}`);
-        });
-    }
-});
+    app.listen(config.port, () => {
+        console.log(`App listening at http://localhost:${config.port}`);
+    });
+  })
+  .catch(err => {
+    console.error(`Error creating Influx database! ${err}`);
+  })
