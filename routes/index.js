@@ -59,27 +59,12 @@ module.exports = (function(influx){
     });
 
     router.get('/getChart', (req, res) => {
-        const query = `SELECT series.minute as datetime, coalesce(cnt.amnt, 0) as bitrate from (
-            SELECT AVG(bitrate) amnt,
-            to_timestamp(floor((extract('epoch' from timestamp) / 5 )) * 5)
-            AT TIME ZONE 'UTC' as interval_alias
-            from stream_data group by interval_alias
-            ) cnt
-         
-         RIGHT JOIN 
-            (    
-            SELECT generate_series(min(date_trunc('hour',timestamp)),
-            max(date_trunc('minute',timestamp)),'5s') as minute from stream_data
-            ) series
-       on series.minute = cnt.interval_alias ORDER BY datetime LIMIT 17280 OFFSET 0;`;
-
-        influx.query(`SELECT round(mean("bitrate") * 1) / 1 AS "bitrate", round(mean("fps") * 1) / 1 AS "fps", min("bitrate") AS  "min_bitrate" FROM stream_data WHERE time > now() - 2d GROUP BY time(1m) FILL(0)`).then(result => {
+        influx.query(`SELECT round(mean("bitrate") * 1) / 1 AS "bitrate", round(mean("fps") * 1) / 1 AS "fps", min("bitrate") AS  "min_bitrate" FROM stream_data WHERE time > now() - 7d GROUP BY time(1m) FILL(0)`).then(result => {
             res.json(result);
         }).catch(err => {
             res.status(500).send(err.stack);
         })
     });
 
-    
     return router;
 });
