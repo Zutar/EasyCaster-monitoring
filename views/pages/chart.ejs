@@ -28,7 +28,7 @@
   <!-- Chart code -->
   <script>
   am4core.ready(function() {
-    fetch('/getChart2h')
+    fetch('/getChart3h')
     .then(response => response.json())
     .then(data => {
           console.log(data);
@@ -49,7 +49,7 @@
             
           let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
           dateAxis.renderer.grid.template.location = 0;
-          dateAxis.minZoomCount = 300;
+          dateAxis.minZoomCount = 190;
 
           // this makes the data to be grouped
           dateAxis.groupData = true;

@@ -66,8 +66,8 @@ module.exports = (function(influx){
         })
     });
 
-    router.get('/getChart2h', (req, res) => {
-        influx.query(`SELECT round(mean("bitrate") * 1) / 1 AS "bitrate", round(mean("fps") * 1) / 1 AS "fps", min("bitrate") AS  "min_bitrate" FROM stream_data WHERE time > now() - 2h GROUP BY time(5s) FILL(0)`).then(result => {
+    router.get('/getChart3h', (req, res) => {
+        influx.query(`SELECT round(mean("bitrate") * 1) / 1 AS "bitrate", round(mean("fps") * 1) / 1 AS "fps", min("bitrate") AS  "min_bitrate" FROM stream_data WHERE time > now() - 3h GROUP BY time(5s) FILL(0)`).then(result => {
             res.json(result);
         }).catch(err => {
             res.status(500).send(err.stack);
