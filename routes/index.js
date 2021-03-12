@@ -31,7 +31,11 @@ module.exports = (function(influx){
           address.address + ":" + address.port);
     });
     
-    server.bind(5005, '127.0.0.1');
+    server.bind({
+        address: 'localhost',
+        port: 5005,
+        exclusive: true
+      });
 /*
     router.get('/', (req, res) => {
         if(child){
