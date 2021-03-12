@@ -21,8 +21,10 @@ module.exports = (function(influx){
     const server = dgram.createSocket("udp4");
     
     server.on("message", function (msg, rinfo) {
+        if(parseInt(remote.port) == 5005){
       console.log("server got: " + msg + " from " +
         rinfo.address + ":" + rinfo.port);
+        }
     });
     
     server.on("listening", function () {
