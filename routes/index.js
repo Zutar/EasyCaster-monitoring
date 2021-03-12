@@ -2,6 +2,7 @@ module.exports = (function(influx){
     'use strict'
     const express = require('express');
     const bodyParser = require('body-parser');
+    const dgram = require("dgram");
     const { spawn } = require('child_process');
     const router = express.Router();
 
@@ -17,6 +18,21 @@ module.exports = (function(influx){
         limit:'5mb'
     }));
 
+    const server = dgram.createSocket("udp4");
+    
+    server.on("message", function (msg, rinfo) {
+      console.log("server got: " + msg + " from " +
+        rinfo.address + ":" + rinfo.port);
+    });
+    
+    server.on("listening", function () {
+      var address = server.address();
+      console.log("server listening " +
+          address.address + ":" + address.port);
+    });
+    
+    server.bind(5005, '127.0.0.1');
+/*
     router.get('/', (req, res) => {
         if(child){
             try{
@@ -53,7 +69,7 @@ module.exports = (function(influx){
 
         res.render('./pages/index.ejs');
     });
-
+*/
     router.get('/chart', (req, res) => {
         res.render('./pages/chart.ejs');
     });
