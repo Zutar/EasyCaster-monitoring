@@ -6,7 +6,7 @@ module.exports = (function(influx){
     const { spawn } = require('child_process');
     const router = express.Router();
 
-    const cmd = `ffmpeg -i 'srt://109.108.92.138:20101?pkt_size=1316&mode=listener' -c copy -f mpegts 'udp://127.0.0.1:11111?pkt_size=1316'`;
+    const cmd = `ffmpeg -i srt://109.108.92.138:20101?pkt_size=1316&mode=listener -c copy -f mpegts udp://127.0.0.1:11111?pkt_size=1316`;
     const cmdArray = cmd.split(' ');
     const firstCmdItem = cmdArray.shift();
     let child = null;
