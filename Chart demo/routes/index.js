@@ -50,6 +50,7 @@ module.exports = (function(influx){
         child = spawn(firstCmdItem, cmdArray);
         
         child.stderr.on('data', (data) => {
+            console.log(data.toString());
             if(data.indexOf('fps') !== -1 && 
                 data.indexOf('bitrate') !== -1 && 
                 data.indexOf('frame') !== -1){
