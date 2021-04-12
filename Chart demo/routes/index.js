@@ -17,7 +17,7 @@ module.exports = (function(influx){
         extended: true,
         limit:'5mb'
     }));
-    
+
 /*
     const server = dgram.createSocket("udp4");
     
@@ -36,7 +36,7 @@ module.exports = (function(influx){
         port: 5005,
         exclusive: true
       });
-
+*/
     router.get('/', (req, res) => {
         if(child){
             try{
@@ -73,7 +73,7 @@ module.exports = (function(influx){
 
         res.render('./pages/index.ejs');
     });
-*/
+
     router.get('/chart', (req, res) => {
         res.render('./pages/chart.ejs');
     });
