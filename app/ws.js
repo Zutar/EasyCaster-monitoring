@@ -19,7 +19,7 @@ module.exports = ((influx) => {
     function pointToDB(data){
         const {bitrate, fps, time, server, channel, stream} = data;
         console.log(bitrate, fps, time, server, channel, stream);
-        /*
+        
         influx.writePoints([
             {
                 measurement: 'stream_data',
@@ -29,6 +29,5 @@ module.exports = ((influx) => {
         ]).catch(err => {
             console.error(`Error saving data to InfluxDB! ${err.stack}`)
         })
-        */
     }
 });
