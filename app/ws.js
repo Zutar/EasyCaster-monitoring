@@ -1,3 +1,4 @@
+const { parse } = require('influx/lib/src/results');
 const WebSocket = require('ws');
 
 module.exports = ((influx) => {
@@ -18,7 +19,9 @@ module.exports = ((influx) => {
 
     function pointToDB(data){
         const {bitrate, fps, time, server, channel, stream} = data;
-        console.log(bitrate, fps, time, server, channel, stream);
+        
+        bitrate = parseFloat(bitrate);
+        fps = parseInt(fps);
         
         influx.writePoints([
             {
