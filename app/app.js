@@ -21,7 +21,7 @@ const influx = new Influx.InfluxDB({
         fields: {
           bitrate: Influx.FieldType.FLOAT,
           fps: Influx.FieldType.INTEGER,
-          time: Influx.FieldType.STRING
+          uptime: Influx.FieldType.STRING
         },
         tags: [
           'server', 'channel', 'stream'

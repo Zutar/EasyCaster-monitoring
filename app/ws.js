@@ -18,7 +18,7 @@ module.exports = ((influx) => {
     }
 
     function pointToDB(data){
-        let {bitrate, fps, time, server, channel, stream} = data;
+        let {bitrate, fps, uptime, server, channel, stream} = data;
         bitrate = parseFloat(bitrate);
         fps = parseInt(fps);
         
@@ -26,10 +26,10 @@ module.exports = ((influx) => {
             {
                 measurement: 'stream_data',
                 tags: { 'server': server, 'channel': channel, 'stream': stream},
-                fields: { bitrate: bitrate, fps: fps, time: time },
+                fields: { bitrate: bitrate, fps: fps, uptime: uptime },
             }
         ]).catch(err => {
-            console.error(`Error saving data to InfluxDB! ${err.stack}`)
+            console.error(`Error saving data to InfluxDB! ${err.stack}`);
         })
     }
 });
