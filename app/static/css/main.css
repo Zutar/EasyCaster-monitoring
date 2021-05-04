@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-decoration: none;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+}
+.channels{
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+.channels__filter{
+    min-width: 300px;
+    padding: 10px 20px;
+}
+.channels__table{
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+.channels__table th{
+    font-size: 1.2em;
+    padding: 10px 0;
+}
+.channels__table td{
+    padding: 15px 0;
+    text-align: center;
+    border-top: solid 1px #dcdcdc;
+}
+.channels__table tr{
+    transition: .2s;
+}
+.channels__table tr:nth-child(odd){
+    background-color: #f8faff;
+}
+.channels__table tr:nth-child(1){
+    background-color: white;
+}
+.channels__table td:nth-child(3){
+    width: 30%;
+}
+.channels__table tr:hover{
+    background-color: #f9fbff;
+}
+.channels__table tr:nth-child(1):hover{
+    background-color: white;
+}
