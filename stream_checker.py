@@ -14,11 +14,8 @@ import json
 import websocket
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
+import socket
 
-
-servers = {
-    'monitoring':  'http://user:123@109.108.92.138:8080/RPC2',
-}
 
 excluded_channels = {
     'None',
@@ -28,7 +25,9 @@ excluded_channels = {
 }
 
 isEnabled = False
-wsServer = "ws://localhost:8081"
+wsServer = 'ws://localhost:8081'
+supervisorServer = 'http://user:123@109.108.92.138:8080/RPC2'
+serverIP = '109.108.92.138'
 
 
 def get_server(uri):
@@ -51,6 +50,7 @@ def parse_stream_items(channel, log):
         fps = 0
         bitrate = 0
         time = 0
+        channel, stream = channel.split("_")
         for i in range(len(log)):
             if log[i].find("fps") != -1:
                 fps = log[i + 1]
@@ -60,7 +60,9 @@ def parse_stream_items(channel, log):
                 bitrate = log[i].split("=")[1]
 
         streamObject = {
+            "server": serverIP,
             "channel": channel,
+            "stream": stream,
             "fps": fps,
             "bitrate": bitrate,
             "time": time
@@ -75,13 +77,9 @@ def get_stream_log(server, channel_name):
 
 def getResult():
     try:
-        channelsDataList = []
-        for key, value in servers.items():
-            server = get_server(value)
-            data = parse_channel_list(server)
-            if data:
-                channelsDataList.append(data)
-        return channelsDataList
+        server = get_server(supervisorServer)
+        data = parse_channel_list(server)
+        if data: return {"type": "stream", "data": data}
     except KeyboardInterrupt:
         return []
 
