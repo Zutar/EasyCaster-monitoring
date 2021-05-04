@@ -8,6 +8,6 @@ config.db.database = 'postgres';
 config.db.password = 'monitoring_pass';
 config.db.port = '5432';
 
-config.port = 8080;
+config.port = 8082;
 
 module.exports = config;
