@@ -18,8 +18,7 @@ module.exports = ((influx) => {
     }
 
     function pointToDB(data){
-        const {bitrate, fps, time, server, channel, stream} = data;
-        
+        let {bitrate, fps, time, server, channel, stream} = data;
         bitrate = parseFloat(bitrate);
         fps = parseInt(fps);
         
