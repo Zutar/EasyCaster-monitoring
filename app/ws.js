@@ -2,14 +2,22 @@ const { parse } = require('influx/lib/src/results');
 const WebSocket = require('ws');
 
 module.exports = ((influx) => {
+
     const wss = new WebSocket.Server({ port: 8081 });
 
-    wss.on('connection', function connection(ws){
-        ws.on('message', incoming);
+    wss.on('connection', function connection(ws, req){
+        liveTVAPI = "yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9";
+        console.log("connect");
+        if(req.headers["x-api-token"] === liveTVAPI){
+            ws.on('message', incoming);
+        }else{
+            ws.close();
+        }
     });
 
     function incoming(message){
         message = JSON.parse(message);
+        console.log(message.type);
         if(message.type === "stream"){
             for(let i = 0; i < message.data.length; i++){
                 pointToDB(message.data[i]);
@@ -21,8 +29,7 @@ module.exports = ((influx) => {
         let {bitrate, fps, time, server, channel, stream} = data;
         bitrate = parseFloat(bitrate);
         fps = parseInt(fps);
-        console.log(time);
-        
+
         influx.writePoints([
             {
                 measurement: 'stream_data',

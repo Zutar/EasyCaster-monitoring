@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Мониторинг</title>
+    <title>live-tv - мониторинг</title>
     <meta charset="utf-8">
     <!-- Open graph -->
     <meta property="og:title" content="Мониторинг">
@@ -14,16 +14,11 @@
 </head>
 <body>
 <div class="channels">
-    <select class="channels__filter">
-        <option>All</option>
-        <option>Channel 1</option>
-        <option>Channel 2</option>
-        <option>Channel 3</option>
-        <option>Channel 4</option>
-        <option>Channel 5</option>
+    <select class="channels__filter" onChange="channelsFilter(this);">
     </select>
+    <button class="channels__refresh">Обновить</button>
     <table class="channels__table">
-        <tr>
+        <tr class="channels__table-header">
             <th>Статус</th>
             <th>Канал</th>
             <th>Поток</th>
@@ -32,34 +27,15 @@
             <th>uptime</th>
             <th>График</th>
         </tr>
-        <tr>
-            <td><span class="channels__status"></span></td>
-            <td>Channel 1</td>
-            <td><a href="#">stream.com/someStream</a></td>
-            <td>10000 kb/s</td>
-            <td>25</td>
-            <td>15:00:00</td>
-            <td><button class="channels__chart">График</button></td>
-        </tr>
-        <tr>
-            <td><span class="channels__status"></span></td>
-            <td>Channel 1</td>
-            <td><a href="#">stream.com/someStream</a></td>
-            <td>10000 kb/s</td>
-            <td>25</td>
-            <td>15:00:00</td>
-            <td><button class="channels__chart">График</button></td>
-        </tr>
-        <tr>
-            <td><span class="channels__status"></span></td>
-            <td>Channel 1</td>
-            <td><a href="#">stream.com/someStream</a></td>
-            <td>10000 kb/s</td>
-            <td>25</td>
-            <td>15:00:00</td>
-            <td><button class="channels__chart">График</button></td>
-        </tr>
     </table>
+
+    <ul class="channel__page-list">
+        <li class="channel__prev-page"><</li>
+        <li class="current-page"></li></li>
+        <li class="channel__next-page">></li>
+    </ul>
+
 </div>
+<script src="../../static/js/index.js"></script>
 </body>
 </html>

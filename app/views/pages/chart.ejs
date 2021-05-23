@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>live-tv - графики</title>
+    <meta charset="utf-8">
+    <!-- Open graph -->
+    <meta property="og:title" content="Мониторинг">
+    <meta property="og:site_name" content="Мониторинг">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="../static/images/icon.png">
+    <!-- Styles, fonts and favicon -->
+    <link rel="stylesheet" href="../static/css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/main.css" type="text/css">
+</head>
+<body>
+    <div class="chart_container">
+        <div class="chart__main-header">
+            <span><%= channel %> > <%= stream %></span>
+        </div>
+        <div class="chart__wrapper">
+            <div class="chart__header">
+                <span class="chart__title">2 часовой график</span>
+                <input type="date" class="chart__start-date-short" disabled>
+                <input type="time" class="chart__start-time-short" disabled>
+                <b>-</b>
+                <input type="date" class="chart__end-date-short" disabled>
+                <input type="time" class="chart__end-time-short" disabled>
+                <button class="chart__prev-data-short"><</button>
+                <button class="chart__next-data-short">></button>
+            </div>
+            <div id="shortChart"></div>
+        </div>
+        <div class="chart__wrapper">
+            <div class="chart__header">
+                <span class="chart__title">7 дневный график</span>
+                <input type="date" class="chart__start-date-long" disabled>
+                <input type="time" class="chart__start-time-long" disabled>
+                <b>-</b>
+                <input type="date" class="chart__end-date-long" disabled>
+                <input type="time" class="chart__end-time-long" disabled>
+                <button class="chart__prev-data-long"><</button>
+                <button class="chart__next-data-long">></button>
+            </div>
+            <div id="longChart"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="../../static/js/chart.js"></script>
+</body>
+</html>
