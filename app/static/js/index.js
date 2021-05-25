@@ -63,8 +63,8 @@ function renderChannels(channels){
             lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
             prevData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
         }
-
-        if(lastData.uptime === prevData.uptime && lastData.bitrate === prevData.bitrate && status !== -1){
+        const timeDiff = new Date() - new Date(lastData.time);
+        if((lastData.uptime === prevData.uptime || lastData.bitrate === prevData.bitrate || timeDiff > 30000) && status !== -1){
             status = 0;
         }
 
