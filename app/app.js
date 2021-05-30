@@ -46,7 +46,9 @@ mongoose.connect(`mongodb://${config.mongo.user}:${config.mongo.password}@${conf
   })
   .then(() => {
     const index = require('./routes/index')(influx);
+    const chart = require('./routes/chart')(influx);
     app.use('/', index);
+    app.use('/chart', chart);
 
     app.listen(config.port, () => {
       console.log(`Start server on localhost:${config.port}`);

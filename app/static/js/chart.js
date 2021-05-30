@@ -178,7 +178,7 @@ am4core.ready(function() {
     shortChartNext.onclick = () => {
             shortChartPage -= 1;
             shortChart.dispose();
-            shortChartDate = new Date(shortChartDate + 1000 * 60 * 60 * 2);
+            shortChartDate = new Date(1000 * 60 * 60 * 2 + shortChartDate.getTime());
             renderShortChart(channel, stream, '5s', '2h', shortChartPage);
     }
 
@@ -192,7 +192,7 @@ am4core.ready(function() {
     longChartNext.onclick = () => {
             longChartPage -= 1;
             longChart.dispose();
-            longChartDate = new Date(longChartDate + 1000 * 60 * 60 * 24 * 7);
+            longChartDate = new Date(1000 * 60 * 60 * 24 * 7 + longChartDate.getTime());
             renderLongChart(channel, stream, '1m', '7d', longChartPage);
     }
 });

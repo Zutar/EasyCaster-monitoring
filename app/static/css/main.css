@@ -125,6 +125,7 @@ body{
 .channels__chart.disabled{
     background-color: #e5e5e5;
     border: solid 1px #e5e5e5;
+    pointer-events: none;
 }
 .channels__chart.disabled:hover{
     background-color: white;
@@ -154,9 +155,36 @@ body{
 .chart__main-header{
     padding: 30px 80px;
 }
-.chart__main-header > span{
-    font-size: 1.5em;
+.chart__main-header-wrapper{
+    display: flex;
+    justify-content: start;
+    align-items: center;
 }
+.chart__main-header-wrapper > span{
+    font-size: 1.5em;
+    margin-left: 5%;
+}
+.chart__back-button{
+    width: 30px;
+    height: 30px;
+    margin: 0px 5px;
+    display: block;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-size: 1.5em;
+    font-weight: 900;
+    background-color: #5885ff;
+    border: solid 2px #5885ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+.chart__back-button:hover{
+    color: #5885ff;
+    background-color: white;
+}
+
 .chart__header{
     width: 100%;
     padding: 0px 80px;
