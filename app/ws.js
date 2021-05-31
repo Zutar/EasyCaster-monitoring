@@ -27,8 +27,8 @@ module.exports = ((influx) => {
 
     function pointToDB(data){
         let {bitrate, fps, time, server, channel, stream} = data;
-        bitrate = parseFloat(bitrate);
-        fps = parseInt(fps);
+        bitrate = parseFloat(bitrate) || 0;
+        fps = parseInt(fps) || 0;
 
         influx.writePoints([
             {
