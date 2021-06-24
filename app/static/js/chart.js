@@ -8,8 +8,15 @@ function renderShortChart(channel, stream, series, period, page){
         .then(response => response.json())
         .then(data => {
             chartData = [];
-            for(let i = 0; i < data.length; i++){
-                chartData.push({ date: new Date(data[i].time), bitrate: data[i].bitrate, min: data[i].min_bitrate });
+            if(data.length > 0){
+                    for(let i = 0; i < data.length; i++){
+                        chartData.push({ date: new Date(data[i].time), bitrate: data[i].bitrate, min: data[i].min_bitrate });
+                    }
+            }else{
+                    for(let i = 1440; i > 0; i--){
+                            const date = new Date(new Date().getTime() - i * 5000);
+                            chartData.push({ date: date, bitrate: 0, min: 0 });
+                    }
             }
 
             const startTimeInput = document.querySelector('.chart__start-time-short');
@@ -40,7 +47,7 @@ function renderShortChart(channel, stream, series, period, page){
 
             let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
             valueAxis.min = 0;
-            valueAxis.max = 4000;
+            valueAxis.max = 8000;
             valueAxis.renderer.minGridDistance = 20;
             valueAxis.extraMin = 0.1;
             valueAxis.extraMax = 0.1;
@@ -78,8 +85,15 @@ function renderLongChart(channel, stream, series, period, page){
         .then(response => response.json())
         .then(data => {
             chartData = [];
-            for(let i = 0; i < data.length; i++){
-                chartData.push({ date: new Date(data[i].time), bitrate: data[i].bitrate, min: data[i].min_bitrate });
+            if(data.length > 0){
+                    for(let i = 0; i < data.length; i++){
+                            chartData.push({ date: new Date(data[i].time), bitrate: data[i].bitrate, min: data[i].min_bitrate });
+                    }
+            }else{
+                    for(let i = 10080; i > 0; i--){
+                            const date = new Date(new Date().getTime() - i * 60000);
+                            chartData.push({ date: date, bitrate: 0, min: 0 });
+                    }
             }
 
             const startTimeInput = document.querySelector('.chart__start-time-long');
@@ -110,7 +124,7 @@ function renderLongChart(channel, stream, series, period, page){
 
             let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
             valueAxis.min = 0;
-            valueAxis.max = 4000;
+            valueAxis.max = 8000;
             valueAxis.renderer.minGridDistance = 20;
             valueAxis.extraMin = 0.1;
             valueAxis.extraMax = 0.1;

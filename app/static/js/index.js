@@ -18,7 +18,7 @@ function getChannelsInfo(page, filter){
         filter: filter
     }
 
-    fetch('/channels', {
+    fetch('/channel/list', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ function renderChannels(channels){
     }
     channels.forEach((channel) => {
         channel.streams.forEach(stream => {
-        let status = 1;
+        let status = stream.status && stream.status.code || -1;
         let streamData = stream.data;
         if(!streamData){
             status = -1;
@@ -53,19 +53,10 @@ function renderChannels(channels){
             status = 0;
         }
 
-        let lastData = null;
-        let prevData = null;
+        let lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
         if(status === 1) {
             streamData = streamData.rows;
             lastData = streamData[0];
-            prevData = streamData[1];
-        }else if(status === -1){
-            lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
-            prevData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
-        }
-        const timeDiff = new Date() - new Date(lastData.time);
-        if((lastData.uptime === prevData.uptime || lastData.bitrate === prevData.bitrate || timeDiff > 30000) && status !== -1){
-            status = 0;
         }
 
         let channelStatusClass = 'green';

@@ -8,6 +8,8 @@
 }
 body{
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    min-width: 980px;
 }
 .channels{
     width: 100%;

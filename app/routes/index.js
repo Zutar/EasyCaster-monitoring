@@ -8,6 +8,14 @@ module.exports = (function(influx){
     const jsonParser = bodyParser.json();
     const router = express.Router();
 
+    function checkUser(req, res, next){
+        const user = req.session.user || req.query.user;
+        console.log(req.session.user, req.query.user);
+        if(!user) return res.status(404).send('User not found!');
+        req.session.user = user;
+
+        next();
+    }
 
     function getChannelsStat(channels){
         let query = '';
@@ -22,16 +30,38 @@ module.exports = (function(influx){
         query += query.substr(0, query.length - 4);
         return influx.query(`SELECT fps, bitrate, uptime FROM "stream_data" WHERE (${query}) GROUP BY channel, stream ORDER BY time DESC LIMIT 2;`);
     }
-// time > now() - 5m AND (${query})
-    router.get('/', (req, res) => {
-        const user = req.session.user || req.query.user;
-        if(!user) return res.status(404).send('User not found!');
 
-        req.session.user = user;
+    function getStreamStatus(streamData){
+        let code = 1;
+        if(!streamData){
+            code = -1;
+        } else if(streamData.length < 2){
+            code = 0;
+        }
+
+        let lastData = null;
+        let prevData = null;
+        if(code === 1) {
+            streamData = streamData.rows;
+            lastData = streamData[0];
+            prevData = streamData[1];
+        }else if(code === -1){
+            lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
+            prevData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
+        }
+        const timeDiff = new Date() - new Date(lastData.time);
+        if((lastData.uptime === prevData.uptime || lastData.bitrate === prevData.bitrate || timeDiff > 30000) && code !== -1){
+            code = 0;
+        }
+
+        return {code: code, message: ''};
+    }
+
+    router.get('/', checkUser, (req, res) => {
         res.render('./pages/index.ejs');
     });
 
-    router.post('/channels', jsonParser, (req, res) => {
+    router.post('/channel/list', jsonParser, (req, res) => {
         const limit = 2;
         const user = req.session.user || req.query.user;
         const filter = req.body.filter || '';
@@ -60,7 +90,6 @@ module.exports = (function(influx){
                 {
                     $limit: limit
                 }]).then(channels => {
-                    console.log(channels);
                     if(channels.length === 0) res.status(404).send('Channels not found!');
                     Channel.aggregate([{
                         $match: {
@@ -82,6 +111,7 @@ module.exports = (function(influx){
                                             for(let k = 0; k < channel.streams.length; k++){
                                                 if(channel.streams[k].name === influxChannel.stream){
                                                     channel.streams[k].data = result.groupRows[j];
+                                                    channel.streams[k].status = getStreamStatus(channel.streams[k].data);
                                                     break;
                                                 }
                                             }
@@ -99,6 +129,26 @@ module.exports = (function(influx){
                 res.status(404).send('User not found!');
             }
         });
+    });
+
+    router.get('/channel', checkUser, (req, res) => {
+        res.render('./pages/index.ejs');
+    });
+
+    router.put('/channel', checkUser, (req, res) => {
+        res.render('./pages/index.ejs');
+    });
+    
+    router.delete('/channel', checkUser, (req, res) => {
+        res.render('./pages/index.ejs');
+    });
+
+    router.get('/channel/add', checkUser, (req, res) => {
+        res.render('./pages/index.ejs');
+    });
+
+    router.post('/channel/add', checkUser, (req, res) => {
+        res.render('./pages/index.ejs');
     });
 
     return router;
