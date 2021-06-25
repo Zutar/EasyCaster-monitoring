@@ -11,7 +11,7 @@ const app = express();
 
 app.use(session({
   secret: config.secret, 
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 3600 * 1000 },
   resave: false,
   saveUninitialized: false
 }));
@@ -37,7 +37,7 @@ const influx = new Influx.InfluxDB({
     ]
   })
 
-mongoose.connect(`mongodb://${config.mongo.user}:${config.mongo.password}@${config.mongo.host}:${config.mongo.port}/${config.mongo.db}`, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {  
+mongoose.connect(`mongodb://${config.mongo.user}:${config.mongo.password}@${config.mongo.host}:${config.mongo.port}/${config.mongo.db}`, { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
   influx.getDatabaseNames()
   .then(names => {
     if (!names.includes('monitoring')) {
@@ -47,8 +47,15 @@ mongoose.connect(`mongodb://${config.mongo.user}:${config.mongo.password}@${conf
   .then(() => {
     const index = require('./routes/index')(influx);
     const chart = require('./routes/chart')(influx);
+    const channel = require('./routes/channel')(influx);
+    const stream = require('./routes/stream')();
+    const users = require('./routes/users')();
+
     app.use('/', index);
     app.use('/chart', chart);
+    app.use('/channel', channel);
+    app.use('/stream', stream);
+    app.use('/users', users);
 
     app.listen(config.port, () => {
       console.log(`Start server on localhost:${config.port}`);

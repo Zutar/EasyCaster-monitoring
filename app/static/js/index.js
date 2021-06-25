@@ -34,7 +34,7 @@ function getChannelsInfo(page, filter){
 }
 
 function renderChannels(channels){
-    const channelsTable = document.querySelector('.channels__table');
+    const channelsTable = document.querySelector('.channels__table > tbody');
     removeAllExceptFirst(channelsTable);
     if(!channels || channels.length === 0){
         channelsTable.innerHTML += `    
@@ -45,7 +45,7 @@ function renderChannels(channels){
     }
     channels.forEach((channel) => {
         channel.streams.forEach(stream => {
-        let status = stream.status && stream.status.code || -1;
+        let status = stream.status ? stream.status.code : -1;
         let streamData = stream.data;
         if(!streamData){
             status = -1;
@@ -53,8 +53,8 @@ function renderChannels(channels){
             status = 0;
         }
 
-        let lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
-        if(status === 1) {
+        let lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"};
+        if(status !== -1) {
             streamData = streamData.rows;
             lastData = streamData[0];
         }
@@ -63,7 +63,7 @@ function renderChannels(channels){
         let channelStatusText = `Данные от ${new Date(lastData.time).toLocaleString()}`;
         let channelChartClass = '';
 
-        if(status == 0){
+        if(status === 0){
             channelStatusClass = 'red';
             channelStatusText = `Поток неактивен!`;
         }else if(status === -1){
@@ -102,9 +102,16 @@ function renderPageList(page, limit, counter){
     const prevPageButton = document.querySelector('.channel__prev-page');
     const currentPageButton = document.querySelector('.current-page');
     const nextPageButton = document.querySelector('.channel__next-page');
-    const pageList = document.querySelectorAll('.channel__page-list li');
+    const pageList = document.querySelector('.channel__page-list');
 
-    pageList.forEach((el) => {
+    if(!limit || !counter){
+        pageList.style.display = 'none';
+        return;
+    }else{
+        pageList.style.display = 'flex';
+    }
+
+    pageList.querySelectorAll('li').forEach((el) => {
         el.style.display = 'block';
     });
 

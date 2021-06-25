@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>live-tv - каналы</title>
+    <meta charset="utf-8">
+    <!-- Open graph -->
+    <meta property="og:title" content="Мониторинг">
+    <meta property="og:site_name" content="Мониторинг">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="../static/images/icon.png">
+    <!-- Styles, fonts and favicon -->
+    <link rel="stylesheet" href="../static/css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/main.css" type="text/css">
+</head>
+<body>
+    <div class="channel_container">
+        <div class="channel__main-header">
+            <div class="channel__main-header-wrapper">
+                <a href="/" class="channel__back-button"><</a>
+                <span>Все каналы</span>
+                <button>Добавить канал</button>
+            </div>
+        </div>
+        <div class="channel__add-block">
+            <h3 class="channel__label-add">Добавить новый канал</h3>
+            <h3 class="channel__label-edit" style="display: none;">Редактировать канал</h3>
+            <b></b>
+            <br>
+            <input class="channel__name" type="text" placeholder="Название">
+            <div class="input-categories">
+                <ul></ul>
+                <input type="text" placeholder="Люди (логин)">
+            </div>
+            <button class="channel__add">Добавить</button>
+            <button class="channel__edit" style="display: none;">Изменить</button>
+        </div>
+        <table id="channel__table">
+            <tr class="channel__table-header">
+                    <td>Название</td>
+                    <td>Количество потоков</td>
+                    <td>Владельцы</td>
+                    <td>Действие</td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="../../static/js/channel.js"></script>
+</body>
+</html>

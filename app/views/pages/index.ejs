@@ -14,9 +14,15 @@
 </head>
 <body>
 <div class="channels">
-    <select class="channels__filter" onChange="channelsFilter(this);">
-    </select>
-    <button class="channels__refresh">Обновить</button>
+    <div class="channels__f-wrapper">
+        <select class="channels__filter" onChange="channelsFilter(this);">
+        </select>
+        <button class="channels__refresh">Обновить</button>
+        <% if(role === 'admin'){ %>
+            <a href="/users">Пользователи</a>
+            <a href="/channels">Каналы</a>
+        <% } %>
+    </div>
     <table class="channels__table">
         <tr class="channels__table-header">
             <th>Статус</th>

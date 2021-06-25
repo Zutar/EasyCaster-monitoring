@@ -1,7 +1,5 @@
 module.exports = (function(influx){
     const express = require('express');
-
-
     const router = express.Router();
 
 
@@ -25,7 +23,7 @@ module.exports = (function(influx){
             const periodSign = period.substr(-1, 1);
             timeCondition = `time > now() - ${parseInt(page) * currentPeriod}${periodSign} AND time < now() - ${(parseInt(page) - 1) * currentPeriod}${periodSign}`;
         }
-        console.log(timeCondition);
+
         influx.query(`SELECT round(mean("bitrate") * 1) / 1 AS "bitrate", round(mean("fps") * 1) / 1 AS "fps", min("bitrate") AS  "min_bitrate" FROM stream_data WHERE ${timeCondition} AND channel='${channel}' AND stream='${stream}' GROUP BY time(${series}) FILL(0);`).then(result => {
             res.json(result);
         }).catch(err => {

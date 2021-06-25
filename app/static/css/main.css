@@ -13,7 +13,7 @@ body{
 }
 .channels{
     width: 100%;
-    max-width: 1024px;
+    max-width: 1980px;
     margin: 0 auto;
     margin-top: 25px;
 }
@@ -22,6 +22,7 @@ body{
     padding: 5px 10px;
 }
 .channels__refresh{
+    margin: 0px 5px;
     padding: 5px;
     background-color: #5885ff;
     color: white;
@@ -34,8 +35,22 @@ body{
     color: #5885ff;
     background-color: white;
 }
+.channels__f-wrapper a{
+    margin: 0px 5px;
+    padding: 5px;
+    background-color: #5885ff;
+    color: white;
+    border: solid 2px #5885ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+.channels__f-wrapper a:hover{
+    color: #5885ff;
+    background-color: white;
+}
 .channels__table{
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
     margin-top: 50px;
     border-collapse: collapse;
@@ -134,7 +149,7 @@ body{
     color: #e5e5e5;
 }
 .channel__page-list{
-    display: flex;
+    display: none;
     justify-content: center;
     margin-top: 25px;
     transition: .3s;
@@ -149,30 +164,29 @@ body{
     display: block;
     padding: 5px;
 }
-.channel__prev-page, .channel__next-page{
+.channel__prev-page, .channel__next-page, .user__next-page{
     color: white !important;
     background-color: #5885ff !important;
     font-weight: 900;
 }
-.chart__main-header{
+.chart__main-header, .channel__main-header, .user__main-header{
     padding: 30px 80px;
 }
-.chart__main-header-wrapper{
+.chart__main-header-wrapper, .channel__main-header-wrapper, .user__main-header-wrapper{
     display: flex;
     justify-content: start;
     align-items: center;
 }
-.chart__main-header-wrapper > span{
+.chart__main-header-wrapper > span, .channel__main-header-wrapper > span, .user__main-header-wrapper > span{
     font-size: 1.5em;
     margin-left: 5%;
 }
-.chart__back-button{
+.chart__back-button, .channel__back-button, .channel__main-header-wrapper > button, .user__main-header-wrapper > button, .user__back-button{
     width: 30px;
     height: 30px;
     margin: 0px 5px;
     display: block;
     text-align: center;
-    line-height: 30px;
     color: white;
     font-size: 1.5em;
     font-weight: 900;
@@ -182,7 +196,30 @@ body{
     cursor: pointer;
     transition: .3s;
 }
+.channel__main-header-wrapper > button, .user__main-header-wrapper > button{
+    width: auto;
+    height: auto;
+    margin-left: 100px;
+    padding: 5px;
+    font-size: 1em;
+}
 .chart__back-button:hover{
+    color: #5885ff;
+    background-color: white;
+}
+.channel__back-button:hover{
+    color: #5885ff;
+    background-color: white;
+}
+.channel__main-header-wrapper > button:hover{
+    color: #5885ff;
+    background-color: white;
+}
+.user__back-button:hover{
+    color: #5885ff;
+    background-color: white;
+}
+.user__main-header-wrapper > button:hover{
     color: #5885ff;
     background-color: white;
 }
@@ -220,4 +257,283 @@ body{
     width: 100%;
     height: 500px;
     max-width: 100%;
+}
+
+
+.channel__add-block{
+    padding: 30px 80px;
+    text-align: center;
+    border: solid 2px #5885ff;
+    display: none;
+}
+.channel__add-block > h3{
+    padding: 5px 0px;
+}
+.channel__add-block > b{
+    color: red;
+}
+.channel__add-block > input{
+    width: 50%;
+    height: 34px;
+    margin-top: 10px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+}
+.input-categories{
+    width: 50%;
+    height: 38px;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border: solid 1px black;
+    outline: none;
+}
+
+.input-categories ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style-type: none;
+    flex-wrap: wrap;
+}
+
+.input-categories li{
+    height: 30px;
+    line-height: 30px;
+    background-color: #5885ff;
+    color: white;
+    border-radius: 10px;
+    margin: 0px 3px;
+    margin-top: 3px;
+    padding: 1px 5px;
+}
+.input-categories input{
+    width: 50%;
+    height: 36px;
+    margin-left: 5px;
+    align-self: flex-start;
+    margin-top: 1px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.input-categories input:hover{
+    border: solid 2px #cdcdcd;
+}
+.channel__add-block > button{
+    width: calc(50% + 2px);
+    height: 30px;
+    margin-top: 10px;
+    background-color: #5885ff;
+    color: white;
+    font-size: 1.2em;
+    border: solid 2px #5885ff;
+    outline: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: .3s;
+}
+.channel__add-block > button:hover{
+    background-color: white;
+    color: #5885ff;
+}
+.channel__not{
+    text-align: center;
+}
+
+#channel__table{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+.channel__table-header{
+    font-weight: 600;
+}
+#channel__table th{
+    font-size: .9em;
+    padding: 10px 0;
+    font-weight: 500;
+    border-top: solid 1px #e9e9e9;
+    border-bottom: solid 2px #e9e9e9;
+}
+#channel__table td{
+    font-size: .9em;
+    padding: 12px 0;
+    text-align: center;
+    border-top: solid 1px #e9e9e9;
+    color: #505050;
+    position: relative;
+}
+#channel__table tr{
+    transition: .2s;
+}
+#channel__table tr:nth-child(odd){
+    background-color: #f8faff;
+}
+#channel__table tr:nth-child(1){
+    background-color: white;
+}
+#channel__table td:nth-child(3){
+    width: 30%;
+}
+#channel__table tr:hover{
+    background-color: #f9fbff;
+}
+#channel__table tr:nth-child(1):hover{
+    background-color: white;
+}
+.channel__stream-table{
+    width: 90%;
+    margin: 0 auto;
+    display: inline-table;
+    border-collapse: collapse;
+}
+.channel__stream-table th{
+    font-size: .9em;
+    padding: 10px 0;
+    font-weight: 500;
+    border-top: solid 1px #e9e9e9;
+    border-bottom: solid 2px #e9e9e9;
+}
+.channel__stream-table td{
+    font-size: .9em;
+    padding: 12px 0;
+    text-align: center;
+    border-top: solid 1px #e9e9e9;
+    color: #505050;
+    position: relative;
+}
+.channel__stream-table tr{
+    transition: .2s;
+}
+.channel__stream-table tr:nth-child(odd){
+    background-color: #f8faff;
+}
+.channel__stream-table tr:nth-child(1){
+    background-color: white;
+}
+.channel__stream-table td:nth-child(3){
+    width: 30%;
+}
+.channel__stream-table tr:hover{
+    background-color: #f9fbff;
+}
+.channel__stream-table tr:nth-child(1):hover{
+    background-color: white;
+}
+.channel__stream-header{
+    font-weight: 600;
+}
+.channels__f-wrapper{
+    width: 80%;
+    margin: 0 auto;
+}
+.stream__add-block input[type="text"]{
+    width: 50%;
+    height: 25px;
+    padding: 0px 10px;
+    outline: none;
+}
+.add-button{
+    background-color: #3aea00;
+    color: white;
+    margin: 0px 5px;
+    padding: 3px 10px;
+    border: solid 2px #3aea00;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .5s;
+}
+.add-button:hover{
+    background-color: #35d200;
+    border: solid 2px #35d200;
+}
+.edit-button{
+    background-color: #5885ff;
+    color: white;
+    margin: 0px 5px;
+    padding: 3px 10px;
+    border: solid 2px #5885ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .5s;
+}
+.edit-button:hover{
+    background-color: #3e70ff;
+    border: solid 2px #3e70ff;
+}
+.delete-button{
+    background-color: red;
+    color: white;
+    margin: 0px 5px;
+    padding: 3px 10px;
+    border: solid 2px red;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .5s;
+}
+.delete-button:hover{
+    background-color: #ef0000;
+    border: solid 2px #ef0000;
+}
+.user__not{
+    text-align: center;
+}
+#user__table{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+.user__table-header{
+    font-weight: 600;
+}
+#user__table th{
+    font-size: .9em;
+    padding: 10px 0;
+    font-weight: 500;
+    border-top: solid 1px #e9e9e9;
+    border-bottom: solid 2px #e9e9e9;
+}
+#user__table td{
+    font-size: .9em;
+    padding: 12px 0;
+    text-align: center;
+    border-top: solid 1px #e9e9e9;
+    color: #505050;
+    position: relative;
+}
+#user__table tr{
+    transition: .2s;
+}
+#user__table tr:nth-child(odd){
+    background-color: #f8faff;
+}
+#user__table tr:nth-child(1){
+    background-color: white;
+}
+#user__table td:nth-child(3){
+    width: 30%;
+}
+#user__table tr:hover{
+    background-color: #f9fbff;
+}
+#user__table tr:nth-child(1):hover{
+    background-color: white;
+}
+.user__add-name, .user__add-company, .user__add-role{
+    width: 50%;
+    height: 25px;
+    margin-top: 10px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+}
+.user__add-role{
+    width: 110px;
 }
