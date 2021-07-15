@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ffprobe": "^1.1.2",
     "ffprobe-client": "^1.1.6",
     "ffprobe-static": "^3.0.0",
     "ws": "^7.5.3"
