@@ -78,8 +78,8 @@ function renderChannels(channels){
                 <td>${channel.name}</td>
                 <td><a href="#">${stream.name}</a></td>
                 <td>${lastData.bitrate} kb/s</td>
-                <td>${lastData.fps}</td>
-                <td>${lastData.uptime}</td>
+<!--                <td>${lastData.fps}</td>-->
+<!--                <td>${lastData.uptime}</td>-->
                 <td><a href="/chart?${chartLink}" class="channels__chart ${channelChartClass}">График</a></td>
              </tr>`;
         });

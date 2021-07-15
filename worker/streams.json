@@ -1,0 +1,22 @@
+[
+  {
+  "name": "testtv",
+  "streams": [{
+    "name": "rozpakuy",
+    "url": "http://cdn-br2.live-tv.cloud:8081/testtv/rozpakuy/playlist.m3u8"
+  }]
+},
+  {
+    "name": "it3od",
+    "streams": [{
+      "name": "1080i",
+      "url": "http://cdn-br2.live-tv.cloud:8081/it3od/1080i/playlist.m3u8"
+    }]
+  },
+  {
+  "name": "fstar",
+  "streams": [{
+    "name": "1080i",
+    "url": "http://cdn-br2.live-tv.cloud:8081/fstar/1080i/playlist.m3u8"
+  }]
+}]

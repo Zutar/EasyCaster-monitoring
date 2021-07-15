@@ -10,7 +10,7 @@ function renderShortChart(channel, stream, series, period, page){
             chartData = [];
             if(data.length > 0){
                     for(let i = 0; i < data.length; i++){
-                        chartData.push({ date: new Date(data[i].time), bitrate: data[i].bitrate, min: data[i].min_bitrate });
+                        chartData.push({ date: new Date(data[i].time), bitrate: data[i].bitrate });
                     }
             }else{
                     for(let i = 1440; i > 0; i--){

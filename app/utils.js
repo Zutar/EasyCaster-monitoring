@@ -55,8 +55,11 @@ module.exports = {
             lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
             prevData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
         }
-        const timeDiff = new Date() - new Date(lastData.time);
-        if ((lastData.uptime === prevData.uptime || lastData.bitrate === prevData.bitrate || timeDiff > 30000) && code !== -1) {
+        // const timeDiff = new Date() - new Date(lastData.time);
+        // if ((lastData.uptime === prevData.uptime || lastData.bitrate === prevData.bitrate || timeDiff > 30000) && code !== -1) {
+        //     code = 0;
+        // }
+        if (lastData.bitrate === prevData.bitrate && code !== -1) {
             code = 0;
         }
 
