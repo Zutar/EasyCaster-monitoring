@@ -7,6 +7,7 @@ module.exports = ((influx) => {
 
     wss.on('connection', function connection(ws, req){
         liveTVAPI = "yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9";
+        console.log(req.headers);
         if(req.headers["x-api-token"] === liveTVAPI){
             ws.isAlive = true;
             ws.on('pong', heartbeat);

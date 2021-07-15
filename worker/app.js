@@ -3,38 +3,58 @@ const ffprobe = require('ffprobe-client')
 const WebSocket = require('ws');
 const fs = require('fs');
 
-const ws = new WebSocket('ws://109.108.92.138:8081', {
-    headers: {
-        'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
-    }
-});
 const time = 5000;
 const serverIP = '109.108.92.138';
+let json = {};
 let connected = false;
-let timerId = null;
 
-ws.on('open', function open() {
-    console.log('connected');
-    fs.readFile('./streams.json', (err, json) => {
-        json = JSON.parse(json);
-        connected = true;
-        timerId = setInterval(() => {
-            getStreamsData(json);
-        }, time);
+function start(){
+    return new Promise((resolve, reject) =>{
+        const server = new WebSocket('ws://109.108.92.138:8081', {
+            headers: {
+                'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
+            }
+        });
+
+        server.onopen = function() {
+            console.log('t2');
+            resolve(server);
+        };
+        server.onerror = function(err) {
+            reject(err);
+        };
     });
-});
+}
 
-ws.on('ping', heartbeat);
+start().then(ws => {
+    const timerId = setInterval(() => {
+        console.log('t3');
+        if(!connected) return;
+        getStreamsData(json);
+    }, time);
 
-ws.on('clsoe', function close() {
-    console.log('close');
-    connected = false;
-    clearTimeout(this.pingTimeout);
-    clearInterval(timerId);
+    ws.on('open', function open() {
+        console.log('connected');
+        fs.readFile('./streams.json', (err, result) => {
+            json = JSON.parse(result);
+            connected = true;
+            console.log(connected);
+        });
+    });
+
+    ws.on('ping', heartbeat);
+
+    ws.on('clsoe', function close() {
+        console.log('close');
+        connected = false;
+        clearTimeout(this.pingTimeout);
+    });
+}).catch((err) => {
+    console.log(err);
 });
 
 async function getStreamsData(data){
-    if(!connected) return;
+    console.log('t1');
     const streamsDataArray = [];
     for(const channel of data){
         const channelName = channel.name;
@@ -64,16 +84,8 @@ async function getStreamsData(data){
 function heartbeat() {
     clearTimeout(this.pingTimeout);
 
-    // Use `WebSocket#terminate()`, which immediately destroys the connection,
-    // instead of `WebSocket#close()`, which waits for the close timer.
-    // Delay should be equal to the interval at which your server
-    // sends out pings plus a conservative assumption of the latency.
     this.pingTimeout = setTimeout(() => {
+        connected = false;
         this.terminate();
     }, 10000 + 1000);
 }
-
-//
-// ws.on('message', function incoming(data) {
-//     console.log(data);
-// });
