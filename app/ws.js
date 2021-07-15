@@ -7,7 +7,6 @@ module.exports = ((influx) => {
 
     wss.on('connection', function connection(ws, req){
         liveTVAPI = "yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9";
-        console.log(req.headers);
         if(req.headers["x-api-token"] === liveTVAPI){
             ws.isAlive = true;
             ws.on('pong', heartbeat);
@@ -37,7 +36,6 @@ module.exports = ((influx) => {
     }
 
     function incoming(message){
-        console.log(message);
         message = JSON.parse(message);
         console.log(message.type);
         if(message.type === "stream"){
@@ -49,10 +47,9 @@ module.exports = ((influx) => {
 
     function pointToDB(data){
         let {bitrate, fps, time, server, channel, stream} = data;
-        console.log(data, data.bitrate);
         bitrate = parseFloat(bitrate) || 0;
         fps = parseInt(fps) || 0;
-        console.log(bitrate);
+
         influx.writePoints([
             {
                 measurement: 'stream_data',

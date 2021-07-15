@@ -8,53 +8,41 @@ const serverIP = '109.108.92.138';
 let json = {};
 let connected = false;
 
-function start(){
-    return new Promise((resolve, reject) =>{
-        const server = new WebSocket('ws://109.108.92.138:8081', {
-            headers: {
-                'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
-            }
-        });
 
-        server.onopen = function() {
-            console.log('t2');
-            resolve(server);
-        };
-        server.onerror = function(err) {
-            reject(err);
-        };
-    });
-}
 
-start().then(ws => {
-    const timerId = setInterval(() => {
-        console.log('t3');
-        if(!connected) return;
-        getStreamsData(json);
-    }, time);
+const ws = new WebSocket('ws://109.108.92.138:8081', {
+    headers: {
+        'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
+    }
+});
 
-    ws.on('open', function open() {
-        console.log('connected');
-        fs.readFile('./streams.json', (err, result) => {
-            json = JSON.parse(result);
-            connected = true;
-            console.log(connected);
-        });
-    });
-
-    ws.on('ping', heartbeat);
-
-    ws.on('clsoe', function close() {
-        console.log('close');
-        connected = false;
-        clearTimeout(this.pingTimeout);
-    });
-}).catch((err) => {
+ws.on('error', (err) => {
     console.log(err);
+   clearInterval(timerId);
+});
+
+const timerId = setInterval(() => {
+    if(!connected) return;
+    getStreamsData(json);
+}, time);
+
+ws.on('open', function open() {
+    console.log('connected');
+    fs.readFile('./streams.json', (err, result) => {
+        json = JSON.parse(result);
+        connected = true;
+    });
+});
+
+ws.on('ping', heartbeat);
+
+ws.on('clsoe', function close() {
+    console.log('close');
+    connected = false;
+    clearTimeout(this.pingTimeout);
 });
 
 async function getStreamsData(data){
-    console.log('t1');
     const streamsDataArray = [];
     for(const channel of data){
         const channelName = channel.name;
@@ -77,7 +65,6 @@ async function getStreamsData(data){
         };
     };
     const streamsData = {"type": "stream", "data": streamsDataArray};
-    console.log('t');
     ws.send(JSON.stringify(streamsData));
 }
 
