@@ -13,6 +13,7 @@ let ws = startWS();
 
 ws.on('error', (err) => {
     console.log(err);
+    clearInterval(timerId);
 });
 
 const timerId = setInterval(() => {
