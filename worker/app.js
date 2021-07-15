@@ -13,7 +13,6 @@ let ws = startWS();
 
 ws.on('error', (err) => {
     console.log(err);
-   clearInterval(timerId);
 });
 
 const timerId = setInterval(() => {
@@ -38,6 +37,7 @@ ws.on('clsoe', function close() {
 });
 
 function startWS(){
+    console.log('Connect..........');
     return new WebSocket(wsServerAddress, {
         headers: {
             'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
@@ -79,6 +79,6 @@ function heartbeat() {
         this.terminate();
         setTimeout(() => {
             startWS();
-        }, 30000);
-    }, 10000 + 1000);
+        }, 3000);
+    }, 10000 + 3000);
 }
