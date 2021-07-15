@@ -61,6 +61,7 @@ module.exports = {
         // }
         const lastPointTime = lastData.time.getNanoTime();
         const timeDiff = ((lastPointTime / 1000000) - Date.now()) - Date.now();
+        console.log(timeDiff, timeDiff > 15000);
         if ((lastData.bitrate === prevData.bitrate || timeDiff > 15000) && code !== -1) {
             code = 0;
         }
