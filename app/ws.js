@@ -7,7 +7,6 @@ module.exports = ((influx) => {
 
     wss.on('connection', function connection(ws, req){
         liveTVAPI = "yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9";
-        console.log("connect", req.headers);
         if(req.headers["x-api-token"] === liveTVAPI){
             ws.on('message', incoming);
         }else{
@@ -28,6 +27,7 @@ module.exports = ((influx) => {
 
     function pointToDB(data){
         let {bitrate, fps, time, server, channel, stream} = data;
+        console.log(data, data.bitrate);
         bitrate = parseFloat(bitrate) || 0;
         fps = parseInt(fps) || 0;
         console.log(bitrate);
