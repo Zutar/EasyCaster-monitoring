@@ -29,7 +29,7 @@ module.exports = ((influx) => {
         let {bitrate, fps, time, server, channel, stream} = data;
         bitrate = parseFloat(bitrate) || 0;
         fps = parseInt(fps) || 0;
-
+        console.log(bitrate);
         influx.writePoints([
             {
                 measurement: 'stream_data',

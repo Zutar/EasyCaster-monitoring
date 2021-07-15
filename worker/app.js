@@ -26,6 +26,7 @@ function getStreamsData(data){
             const videoStream = ffprobeResult.streams[0];
 
             const bitrate = videoStream.tags.variant_bitrate;
+            console.log(bitrate);
             const fps = 0;
             const time = '0';
 
@@ -41,7 +42,6 @@ function getStreamsData(data){
         });
 
         const streamsData = {"type": "stream", "data": data};
-        console.log(streamsData);
         ws.send(JSON.stringify(streamsData));
     });
 }
