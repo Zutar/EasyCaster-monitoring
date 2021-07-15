@@ -4,13 +4,14 @@ const WebSocket = require('ws');
 const fs = require('fs');
 
 const time = 5000;
-const serverIP = '109.108.92.138';
+const localServerIP = '109.108.92.138';
+const wsServerAddress = 'ws://109.108.92.138:8081';
 let json = {};
 let connected = false;
 
 
 
-const ws = new WebSocket('ws://109.108.92.138:8081', {
+const ws = new WebSocket(wsServerAddress, {
     headers: {
         'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
     }
@@ -55,7 +56,7 @@ async function getStreamsData(data){
             const time = '0';
 
             streamsDataArray.push({
-                "server": serverIP,
+                "server": localServerIP,
                 "channel": channelName,
                 "stream": stream.name,
                 "fps": fps,
