@@ -3,7 +3,7 @@ const ffprobe = require('ffprobe-client')
 const WebSocket = require('ws');
 const fs = require('fs');
 
-const wss = new WebSocket('ws://109.108.92.138:8081', {
+const ws = new WebSocket('ws://109.108.92.138:8081', {
     headers: {
         'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
     }
@@ -24,7 +24,7 @@ ws.on('open', function open() {
     });
 });
 
-client.on('ping', heartbeat);
+ws.on('ping', heartbeat);
 
 ws.on('clsoe', function close() {
     console.log('close');
