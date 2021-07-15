@@ -60,7 +60,7 @@ module.exports = {
         //     code = 0;
         // }
         const lastPointTime = lastData.time.getNanoTime();
-        const timeDiff = (Date.now() - (lastPointTime / 1000000) - Date.now());
+        const timeDiff = (lastPointTime, lastData.time, lastData.time.getNanoTime(), Date.now() - (lastPointTime / 1000000) - Date.now());
         console.log(timeDiff, timeDiff > 15000);
         if ((lastData.bitrate === prevData.bitrate || timeDiff > 15000) && code !== -1) {
             code = 0;
