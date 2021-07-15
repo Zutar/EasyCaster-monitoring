@@ -9,13 +9,7 @@ const wsServerAddress = 'ws://109.108.92.138:8081';
 let json = {};
 let connected = false;
 
-
-
-const ws = new WebSocket(wsServerAddress, {
-    headers: {
-        'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
-    }
-});
+let ws = startWS();
 
 ws.on('error', (err) => {
     console.log(err);
@@ -42,6 +36,14 @@ ws.on('clsoe', function close() {
     connected = false;
     clearTimeout(this.pingTimeout);
 });
+
+function startWS(){
+    return new WebSocket(wsServerAddress, {
+        headers: {
+            'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
+        }
+    });
+}
 
 async function getStreamsData(data){
     const streamsDataArray = [];
@@ -75,5 +77,8 @@ function heartbeat() {
     this.pingTimeout = setTimeout(() => {
         connected = false;
         this.terminate();
+        setTimeout(() => {
+            startWS();
+        }, 30000);
     }, 10000 + 1000);
 }
