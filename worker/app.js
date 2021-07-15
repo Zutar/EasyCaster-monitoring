@@ -3,7 +3,9 @@ const ffprobe = require('ffprobe-client')
 const WebSocket = require('ws');
 const fs = require('fs');
 
-const ws = new WebSocket('ws://109.108.92.138:8081');
+const ws = new WebSocket('ws://109.108.92.138:8081', {
+    'x-api-token': 'yIhLCXjVi1KJvCKdXtzRfCQ86Px7mGS9'
+});
 const time = 5000;
 const serverIP = '109.108.92.138';
 
@@ -26,7 +28,6 @@ function getStreamsData(data){
             const videoStream = ffprobeResult.streams[0];
 
             const bitrate = videoStream.tags.variant_bitrate;
-            console.log(bitrate);
             const fps = 0;
             const time = '0';
 
@@ -38,12 +39,11 @@ function getStreamsData(data){
                 "bitrate": bitrate,
                 "time": time
             });
-
         });
-
-        const streamsData = {"type": "stream", "data": data};
-        ws.send(JSON.stringify(streamsData));
     });
+    const streamsData = {"type": "stream", "data": data};
+    console.log('t');
+    ws.send(JSON.stringify(streamsData));
 }
 
 //
