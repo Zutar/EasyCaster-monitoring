@@ -3,7 +3,7 @@ const ffprobe = require('ffprobe-client')
 const WebSocket = require('ws');
 const fs = require('fs');
 
-const time = 5000;
+const time = 10000;
 const localServerIP = '109.108.92.138';
 const wsServerAddress = 'ws://109.108.92.138:8081';
 let json = {};

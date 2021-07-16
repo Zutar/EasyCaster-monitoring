@@ -1,22 +1,81 @@
 [
   {
-  "name": "testtv",
-  "streams": [{
-    "name": "rozpakuy",
-    "url": "http://cdn-br2.live-tv.cloud:8081/testtv/rozpakuy/playlist.m3u8"
-  }]
-},
+    "name": "testtv",
+    "streams": [{
+      "name": "rozpakuy",
+      "url": "http://cdn-br2.live-tv.cloud:8081/testtv/rozpakuy/playlist.m3u8"
+    }]
+  },
   {
     "name": "it3od",
     "streams": [{
       "name": "1080i",
       "url": "http://cdn-br2.live-tv.cloud:8081/it3od/1080i/playlist.m3u8"
+    },
+    {
+      "name": "576i",
+      "url": "http://cdn-br2.live-tv.cloud/it3od/576i/playlist.m3u8"
     }]
   },
   {
-  "name": "fstar",
-  "streams": [{
-    "name": "1080i",
-    "url": "http://cdn-br2.live-tv.cloud:8081/fstar/1080i/playlist.m3u8"
-  }]
-}]
+    "name": "fstar",
+    "streams": [{
+      "name": "1080i",
+      "url": "http://cdn-br2.live-tv.cloud:8081/fstar/1080i/playlist.m3u8"
+    },
+    {
+      "name": "360p",
+      "url": "http://cdn-br2.live-tv.cloud/fstar/360p/playlist.m3u8"
+    },
+    {
+      "name": "480p",
+      "url": "http://cdn-br2.live-tv.cloud/fstar/480p/playlist.m3u8"
+    },
+    {
+      "name": "720p",
+      "url": "http://cdn-br2.live-tv.cloud/fstar/720p/playlist.m3u8"
+    }]
+  },
+  {
+    "name": "wave",
+    "streams": [{
+      "name": "wave-216",
+      "url": "http://cdn1.live-tv.od.ua:8081/wave/wave-216/playlist.m3u8"
+    },
+    {
+      "name": "wave-360",
+      "url": "http://cdn1.live-tv.od.ua:8081/wave/wave-360/playlist.m3u8"
+    },
+    {
+      "name": "wave-504",
+      "url": "http://cdn1.live-tv.od.ua:8081/wave/wave-504/playlist.m3u8"
+    },
+    {
+      "name": "wave-720",
+      "url": "http://cdn1.live-tv.od.ua:8081/wave/wave-720/playlist.m3u8"
+    }]
+  },
+  {
+    "name": "7tvod",
+    "streams": [{
+      "name": "7tvod",
+      "url": "http://cdn10.live-tv.od.ua:8081/7tvod/7tvod/playlist.m3u8"
+    },
+      {
+        "name": "7tvod-sub",
+        "url": "http://cdn10.live-tv.od.ua:8081/7tvod/7tvod-sub/playlist.m3u8"
+      },
+      {
+        "name": "7tvod-sub2",
+        "url": "http://cdn10.live-tv.od.ua:8081/7tvod/7tvod-sub2/playlist.m3u8"
+      },
+      {
+        "name": "7tvod-sub3",
+        "url": "http://cdn10.live-tv.od.ua:8081/7tvod/7tvod-sub3/playlist.m3u8"
+      },
+      {
+        "name": "7tvod-sub4",
+        "url": "http://cdn10.live-tv.od.ua:8081/7tvod/7tvod-sub4/playlist.m3u8"
+      }]
+  }
+]
