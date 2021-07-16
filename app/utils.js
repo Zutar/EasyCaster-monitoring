@@ -44,10 +44,10 @@ module.exports = {
         } else if (streamData.length < 2) {
             code = 0;
         }
-        console.log(streamData);
+
         let lastData = null;
         let prevData = null;
-        if (code !== -1) {
+        if (code !== -1 && lastData && prevData) {
             streamData = streamData.rows;
             lastData = streamData[0];
             prevData = streamData[1];

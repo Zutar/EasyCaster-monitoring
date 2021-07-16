@@ -14,7 +14,7 @@ function renderShortChart(channel, stream, series, period, page){
                     }
             }else{
                     for(let i = 1440; i > 0; i--){
-                            const date = new Date(new Date().getTime() - i * 5000);
+                            const date = new Date(new Date().getTime() - i * 10000);
                             chartData.push({ date: date, bitrate: 0, min: 0 });
                     }
             }
@@ -174,7 +174,7 @@ am4core.ready(function() {
     let shortChartPage = 1;
     let longChartPage = 1;
 
-    renderShortChart(channel, stream, '5s', '2h', shortChartPage);
+    renderShortChart(channel, stream, '10s', '2h', shortChartPage);
     renderLongChart(channel, stream,'1m', '7d', longChartPage);
 
     const shortChartPrev = document.querySelector('.chart__prev-data-short');
@@ -186,14 +186,14 @@ am4core.ready(function() {
             shortChartPage += 1;
             shortChart.dispose();
             shortChartDate = new Date(shortChartDate - 1000 * 60 * 60 * 2);
-            renderShortChart(channel, stream, '5s', '2h', shortChartPage);
+            renderShortChart(channel, stream, '10s', '2h', shortChartPage);
     }
 
     shortChartNext.onclick = () => {
             shortChartPage -= 1;
             shortChart.dispose();
             shortChartDate = new Date(1000 * 60 * 60 * 2 + shortChartDate.getTime());
-            renderShortChart(channel, stream, '5s', '2h', shortChartPage);
+            renderShortChart(channel, stream, '10s', '2h', shortChartPage);
     }
 
     longChartPrev.onclick = () => {

@@ -10,7 +10,7 @@ module.exports = (function(influx){
 
     router.get('/data', (req, res) => {
         const {channel, stream, series, period, page} = req.query;
-        if(series !== "5s" && series !== "1m"){
+        if(series !== "10s" && series !== "1m"){
             res.status(404).send('User not found!');
         }
 
