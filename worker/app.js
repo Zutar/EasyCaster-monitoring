@@ -51,24 +51,31 @@ async function getStreamsData(data){
     for(const channel of data){
         const channelName = channel.name;
         for(stream of channel.streams){
-            const ffprobeResult = await ffprobe(stream.url);
-            const videoStream = ffprobeResult.streams[0];
+            let ffprobeResult = null;
 
-            const bitrate = (videoStream.tags.variant_bitrate / 1024).toFixed(2);
-            const fps = 0;
-            const time = '0';
+            try {
+                ffprobeResult = await ffprobe(stream.url);
 
-            streamsDataArray.push({
-                "server": localServerIP,
-                "channel": channelName,
-                "stream": stream.name,
-                "fps": fps,
-                "bitrate": bitrate,
-                "time": time
-            });
+                const videoStream = ffprobeResult.streams[0];
+                const bitrate = (videoStream.tags.variant_bitrate / 1024).toFixed(2);
+                const fps = 0;
+                const time = '0';
+
+                streamsDataArray.push({
+                    "server": localServerIP,
+                    "channel": channelName,
+                    "stream": stream.name,
+                    "fps": fps,
+                    "bitrate": bitrate,
+                    "time": time
+                });
+            } catch(err) {
+                //console.log(stream.url, err);
+            }
         };
     };
     const streamsData = {"type": "stream", "data": streamsDataArray};
+    console.log('send');
     ws.send(JSON.stringify(streamsData));
 }
 
