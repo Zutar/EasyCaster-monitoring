@@ -52,13 +52,10 @@ module.exports = {
             lastData = streamData[0];
             prevData = streamData[1];
         } else {
-            lastData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
-            prevData = {"time": "-", "fps": 0, "bitrate": 0, "uptime": "0"}
+            code = 0;
+            return {code: code, message: ''};
         }
-        // const timeDiff = new Date() - new Date(lastData.time);
-        // if ((lastData.uptime === prevData.uptime || lastData.bitrate === prevData.bitrate || timeDiff > 30000) && code !== -1) {
-        //     code = 0;
-        // }
+
         const lastPointTime = lastData.time.getNanoTime();
         const timeDiff = (Date.now() - lastPointTime / 1000000);
 
