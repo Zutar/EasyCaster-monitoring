@@ -70,7 +70,14 @@ async function getStreamsData(data){
                     "time": time
                 });
             } catch(err) {
-                //console.log(stream.url, err);
+                streamsDataArray.push({
+                    "server": localServerIP,
+                    "channel": channelName,
+                    "stream": stream.name,
+                    "fps": 0,
+                    "bitrate": 0,
+                    "time": 0
+                });
             }
         };
     };

@@ -47,20 +47,25 @@ module.exports = {
 
         let lastData = null;
         let prevData = null;
-        if (code !== -1 && lastData && prevData) {
+        if (code !== -1) {
             streamData = streamData.rows;
             lastData = streamData[0];
             prevData = streamData[1];
         } else {
-            code = 0;
             return {code: code, message: ''};
         }
 
         const lastPointTime = lastData.time.getNanoTime();
         const timeDiff = (Date.now() - lastPointTime / 1000000);
 
-        if (code !== -1 && (lastData.bitrate === prevData.bitrate || timeDiff > 15000)) {
-            code = 0;
+        if (code !== -1 && lastData && prevData) {
+            if(lastData.bitrate === prevData.bitrate || timeDiff > 15000){
+                code = 0;
+            }else{
+                code = 1;
+            }
+        }else{
+            code = -1;
         }
 
         return {code: code, message: ''};
